@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 // Vamos a trabajar las relaciones con un equipo de fútbol.
 
 // Usando las anotaciones de lombok
@@ -32,5 +34,7 @@ public class Club {
     @OneToOne(targetEntity = Coach.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_coach") // Esta anotación nos sirve para especificar un nombre que queremos.
     private Coach coach;
+
+
 
 }
