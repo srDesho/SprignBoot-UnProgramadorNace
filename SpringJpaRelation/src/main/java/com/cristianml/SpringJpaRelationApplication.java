@@ -1,4 +1,4 @@
-package com.cristianml.SpringJpaRelation;
+package com.cristianml;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

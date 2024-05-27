@@ -1,4 +1,4 @@
-package com.cristianml.SpringJpaRelation.entities;
+package com.cristianml.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
