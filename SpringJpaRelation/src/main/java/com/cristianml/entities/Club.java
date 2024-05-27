@@ -56,4 +56,20 @@ public class Club {
     // Relación ManyToOne
     @ManyToOne(targetEntity = FootballAssociation.class)
     private FootballAssociation footballAssociation;
+
+    // Relación ManyToMany
+    // Debemos poner la anotación @ManyToMany en cualquiera de las clases relacionadas, en este caso no crearemos el
+    // atributo en la clase Football.
+    @ManyToMany(targetEntity = FootballCompetition.class, fetch = FetchType.LAZY)
+
+    // Si queremos cambiar el nombre de la tabla y de las columnas:
+    // Con @JoinTable pasamos los siguientes parámetros:
+    // name = "nombreQueQueramos".
+    // joinColumns: sirve para poder usar la anotacion @JoinColumn y así definimos el nombre que queramos.
+    // inverseJoinColumns: sirve para poder invertir la relación asociada y poder tomar la llave foránea,
+    // ya que no creamos el atributo relacionado en la clase FootballCompetition para modificar el nombre ahí.
+    @JoinTable(name = "club_competitions"
+    , joinColumns = @JoinColumn(name = "club")
+    , inverseJoinColumns = @JoinColumn(name = "competition"))
+    private List<FootballAssociation> footballAssociations;
 }

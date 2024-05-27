@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -36,4 +37,5 @@ public class FootballCompetition {
 
     @Column(name = "end_date", columnDefinition = "DATE")
     private LocalDate endDate;
+
 }
