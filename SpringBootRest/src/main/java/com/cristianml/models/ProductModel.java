@@ -25,4 +25,8 @@ public class ProductModel {
     @Column(name = "precio")
     // Usamos el tipo de datos BigDecimal para cuando trabajamos con diner, ya que es de tipo decimal y más preciso.
     private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "id_fabricante", nullable = false)
+    private MakerModel maker;
 }
