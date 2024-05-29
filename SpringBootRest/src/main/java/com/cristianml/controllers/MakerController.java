@@ -4,6 +4,7 @@ import com.cristianml.controllers.dto.MakerDTO;
 import com.cristianml.models.MakerModel;
 import com.cristianml.service.impl.MakerServiceImpl;
 import com.cristianml.utilities.Utilities;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -105,5 +106,15 @@ public class MakerController {
             return Utilities.generateResponse(HttpStatus.NOT_FOUND, "No existe registro en la db con ese id.");
     }
 
+    // Método para eliminar por id
+    @DeleteMapping("/maker/{id}")
+    public ResponseEntity<Object> deleteMaker (@PathVariable("id") Long id) {
+        try {
+            this.makerService.deleteById(id);
+            return Utilities.generateResponse(HttpStatus.OK, "Registro eliminado exitosamente.");
 
+        } catch (Exception e) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "Falló la ejecución, por favor inténtelo más tarde.");
+        }
+    }
 }
