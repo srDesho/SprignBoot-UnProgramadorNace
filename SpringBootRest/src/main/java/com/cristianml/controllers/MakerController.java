@@ -80,7 +80,30 @@ public class MakerController {
 
         // Guardamos en la base de datos convirtiendo a un MakerModel, porque nuestro método .save recibe una entidad.
         this.makerService.save(MakerModel.builder().name(request.getName()).build());
-        return Utilities.generateResponse(HttpStatus.CREATED, "Se ha creado el producto exitsamente.");
+        return Utilities.generateResponse(HttpStatus.CREATED, "Se ha creado el producto exitosamente.");
     }
+
+    // Método para editar un Maker
+    @PutMapping("/maker/{id}")
+    public ResponseEntity<Object> updateMaker(@PathVariable("id") Long id, @RequestBody MakerDTO request) {
+        // Creamos un Oprional para buscar el Maker por id
+        Optional<MakerModel> optional = this.makerService.findById(id);
+
+        // Verificamos si existe un maker con el id dado
+        if (optional.isPresent()) {
+            if (request.getName().isBlank()) {
+                return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "El nombre no puede estar vacío,");
+            }
+            // Obtenemos la entidad que encontro en optional
+            MakerModel makerModel = optional.get();
+            makerModel.setName(request.getName());
+            this.makerService.save(makerModel);
+
+            return Utilities.generateResponse(HttpStatus.OK, "Se editó el registro exitosamente.");
+        }
+            // Si no existe el registro
+            return Utilities.generateResponse(HttpStatus.NOT_FOUND, "No existe registro en la db con ese id.");
+    }
+
 
 }
