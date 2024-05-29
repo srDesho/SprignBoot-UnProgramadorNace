@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(("/api/v1"))
@@ -42,6 +45,27 @@ public class MakerController {
         // Si no se encontró
         return ResponseEntity.notFound().build();
 
+    }
+
+    // Método para obtener lista de registros
+    @GetMapping("/maker")
+    public ResponseEntity<?> getMakers() {
+        List<MakerDTO> makerList = makerService.findAll()
+                // convertimos con .stream a un makerDTO
+                .stream()
+                // Debemos tener creado el .builder en nuestro modelo, en este caso lo creamos con lombok @Builder.
+                // Transformamos los elementos de la lista con map para devolver una nueva lista con los elementos modificados.
+                .map(maker -> MakerDTO.builder()
+                        // Seteamos los atributos a cada maker del map
+                        .id(maker.getId())
+                        .name(maker.getName())
+                        .products(maker.getProducts())
+                        .build())
+                .toList();
+                // .collect(Collectors.toList()); Llamamos al to list con esta línea en caso de que trabajemos con java 8.
+
+        // Retornamos nuestra lista convertida
+        return ResponseEntity.ok(makerList);
     }
 
 }
