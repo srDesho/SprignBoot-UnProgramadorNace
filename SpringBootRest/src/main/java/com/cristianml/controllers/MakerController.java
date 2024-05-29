@@ -3,6 +3,7 @@ package com.cristianml.controllers;
 import com.cristianml.controllers.dto.MakerDTO;
 import com.cristianml.models.MakerModel;
 import com.cristianml.service.impl.MakerServiceImpl;
+import com.cristianml.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,6 +67,20 @@ public class MakerController {
 
         // Retornamos nuestra lista convertida
         return ResponseEntity.ok(makerList);
+    }
+
+    // Método para Guardar Maker
+    @PostMapping("/maker")
+    // Siempre que retornamos o recibamos un objeto debe se un DTO
+    public ResponseEntity<Object> saveMaker(@RequestBody MakerDTO request) {
+       // Verificamos que el nombre no venga vacío
+        if (request.getName().isBlank()) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "El nombre no puede estar vacío,");
+        }
+
+        // Guardamos en la base de datos convirtiendo a un MakerModel, porque nuestro método .save recibe una entidad.
+        this.makerService.save(MakerModel.builder().name(request.getName()).build());
+        return Utilities.generateResponse(HttpStatus.CREATED, "Se ha creado el producto exitsamente.");
     }
 
 }
