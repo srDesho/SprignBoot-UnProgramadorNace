@@ -1,5 +1,6 @@
 package com.cristianml.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +28,7 @@ public class MakerModel {
     // orphanRemoval = true: sirve para cuando eliminemos un fabricante, los productos también se eliminan porque un producto
     // no puede existir si no existe un creador.
     @OneToMany(mappedBy = "maker", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JsonIgnore // Esto para que Jackson no va a serializar automáticamente sino cuando yo se lo pida.
+    // Esto por error a la lista nos la entrega vacía porque la tenemos etiquetada con FetchType.LAZY.
     private List<ProductModel> products = new ArrayList<>();
 }

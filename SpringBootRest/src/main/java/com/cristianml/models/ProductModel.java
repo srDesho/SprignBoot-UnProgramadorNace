@@ -1,5 +1,6 @@
 package com.cristianml.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,5 +29,7 @@ public class ProductModel {
 
     @ManyToOne
     @JoinColumn(name = "id_fabricante", nullable = false)
+    @JsonIgnore // Esto para que Jackson no va a serializar automáticamente sino cuando yo se lo pida.
+    // Esto por error a la lista nos la entrega vacía porque la tenemos etiquetada con FetchType.LAZY.
     private MakerModel maker;
 }
