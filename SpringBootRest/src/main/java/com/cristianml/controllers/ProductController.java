@@ -63,13 +63,14 @@ public class ProductController {
     }
 
     // Guardar un Producto
+
     @PostMapping("/product")
     // Es buena práctica retornar o recibir solicitudes con un ModeloDTO y no con una entidad, debemos crear nuestro modelo
     // con los mismos atributos que la entidad en un paquete dto.
     public ResponseEntity<Object> saveProduct(@RequestBody ProductDTO request) {
         // Verificamos que los campos no vengan vacíos o nulos
         if (request.getName().isBlank() || request.getPrice() == null || request.getMaker() == null) {
-            return  Utilities.generateResponse(HttpStatus.BAD_REQUEST, "No se pudo crear el registro, inténtelo nuevamente");
+            return  Utilities.generateResponse(HttpStatus.BAD_REQUEST, "No se pudo crear el registro, inténtelo nuevamente.");
         }
 
         // Creamos la entidad
@@ -83,6 +84,29 @@ public class ProductController {
     }
 
     // Editar un Producto
+
+    @PutMapping("/product/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO request) {
+        // Verificamos si el registro con el id de solicitado existe en la base de datos
+        Optional<ProductModel> optional = this.productService.findById(id);
+        if (!optional.isPresent()) {
+            return Utilities.generateResponse(HttpStatus.NOT_FOUND, "El producto con ese id no existe en la db.");
+        }
+
+        // Verificamos si los datos están vacíos o nulos
+        if (request.getName().isBlank() || request.getPrice() == null || request.getMaker() == null) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "No se pudo editar el registro, inténtelo nuevamente.");
+        }
+
+        // Obtenemos el producto desde el optional.
+        ProductModel productModel = optional.get();
+        productModel.setName(request.getName());
+        productModel.setPrice(request.getPrice());
+        productModel.setMaker(request.getMaker());
+        this.productService.save(productModel);
+
+        return Utilities.generateResponse(HttpStatus.OK, "Se editó el registro exitosamente.");
+    }
 
     // Eliminar un Producto
 
