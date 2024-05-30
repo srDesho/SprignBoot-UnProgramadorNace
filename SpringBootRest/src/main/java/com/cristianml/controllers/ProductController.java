@@ -6,12 +6,11 @@ import com.cristianml.models.ProductModel;
 import com.cristianml.service.IProductService;
 import com.cristianml.service.impl.ProductServiceImpl;
 import com.cristianml.utilities.Utilities;
+import jdk.jshell.execution.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -62,5 +61,29 @@ public class ProductController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    // Guardar un Producto
+    @PostMapping("/product")
+    // Es buena práctica retornar o recibir solicitudes con un ModeloDTO y no con una entidad, debemos crear nuestro modelo
+    // con los mismos atributos que la entidad en un paquete dto.
+    public ResponseEntity<Object> saveProduct(@RequestBody ProductDTO request) {
+        // Verificamos que los campos no vengan vacíos o nulos
+        if (request.getName().isBlank() || request.getPrice() == null || request.getMaker() == null) {
+            return  Utilities.generateResponse(HttpStatus.BAD_REQUEST, "No se pudo crear el registro, inténtelo nuevamente");
+        }
+
+        // Creamos la entidad
+        ProductModel productModel = new ProductModel();
+        productModel.setName(request.getName());
+        productModel.setPrice(request.getPrice());
+        productModel.setMaker(request.getMaker());
+        this.productService.save(productModel);
+
+        return Utilities.generateResponse(HttpStatus.CREATED, "Producto creado exitosamente.");
+    }
+
+    // Editar un Producto
+
+    // Eliminar un Producto
 
 }
