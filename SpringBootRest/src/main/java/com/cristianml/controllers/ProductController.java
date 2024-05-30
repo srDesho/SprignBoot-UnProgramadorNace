@@ -1,21 +1,16 @@
 package com.cristianml.controllers;
 
-import com.cristianml.controllers.dto.MakerDTO;
 import com.cristianml.controllers.dto.ProductDTO;
 import com.cristianml.models.ProductModel;
 import com.cristianml.service.IProductService;
-import com.cristianml.service.impl.ProductServiceImpl;
 import com.cristianml.utilities.Utilities;
-import jdk.jshell.execution.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -89,7 +84,7 @@ public class ProductController {
     public ResponseEntity<Object> updateProduct(@PathVariable("id") Long id, @RequestBody ProductDTO request) {
         // Verificamos si el registro con el id de solicitado existe en la base de datos
         Optional<ProductModel> optional = this.productService.findById(id);
-        if (!optional.isPresent()) {
+        if (optional.isEmpty()) {
             return Utilities.generateResponse(HttpStatus.NOT_FOUND, "El producto con ese id no existe en la db.");
         }
 
@@ -109,5 +104,22 @@ public class ProductController {
     }
 
     // Eliminar un Producto
+
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable("id") Long id) {
+        // Verificamos si existe en la db
+        Optional<ProductModel> optional = this.productService.findById(id);
+        if (optional.isEmpty()) {
+            return Utilities.generateResponse(HttpStatus.NOT_FOUND, "No existe registro con ese ID en la base de datos.");
+        }
+
+        // Envolvemos en un try catch para eliminar
+        try {
+            this.productService.deleteById(id);
+            return Utilities.generateResponse(HttpStatus.OK, "Registro eliminado exitosamente.");
+        } catch (Exception e) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "Falló la ejecución, inténtelo más tarde.");
+        }
+    }
 
 }
