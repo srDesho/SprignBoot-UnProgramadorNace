@@ -1,5 +1,6 @@
 package com.cristianml.repository;
 
+import com.cristianml.models.MakerModel;
 import com.cristianml.models.ProductModel;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -21,4 +22,7 @@ public interface ProductRepository extends CrudRepository<ProductModel, Long> {
 
     // 2. Con Query Methods
     List<ProductModel> findProductModelByPriceBetween(BigDecimal minPrice, BigDecimal maxPrice);
+
+    // Método para verificar si existen productos relacionado con un maker
+    boolean existsByMaker(MakerModel maker);
 }

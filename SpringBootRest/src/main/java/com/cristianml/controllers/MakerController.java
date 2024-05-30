@@ -3,6 +3,7 @@ package com.cristianml.controllers;
 import com.cristianml.controllers.dto.MakerDTO;
 import com.cristianml.models.MakerModel;
 import com.cristianml.service.IMakerService;
+import com.cristianml.service.IProductService;
 import com.cristianml.service.impl.MakerServiceImpl;
 import com.cristianml.utilities.Utilities;
 import jakarta.persistence.EntityNotFoundException;
@@ -108,8 +109,24 @@ public class MakerController {
     }
 
     // Método para eliminar por id
+    // Inyectamos el producto service para saber si existen registros con un producto que deseamos eliminar
+    @Autowired
+    private IProductService productService;
+
     @DeleteMapping("/maker/{id}")
     public ResponseEntity<Object> deleteMaker (@PathVariable("id") Long id) {
+        // Creamos optional para verificar que exista en la db
+        Optional<MakerModel> optional = this.makerService.findById(id);
+        if (optional.isEmpty()) {
+            return Utilities.generateResponse(HttpStatus.NOT_FOUND, "No existe registro con ese ID en la base de datos.");
+        }
+
+        // Verificamos si tiene el maker tiene relación registros relacionados con productos
+        if (this.productService.existsRegisterByMaker(id)) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST
+                    , "No se puede eliminar el registro debido a que la categoría tiene relación con la tabla productos");
+        }
+
         try {
             this.makerService.deleteById(id);
             return Utilities.generateResponse(HttpStatus.OK, "Registro eliminado exitosamente.");

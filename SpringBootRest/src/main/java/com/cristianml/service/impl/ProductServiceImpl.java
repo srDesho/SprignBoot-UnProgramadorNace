@@ -1,6 +1,8 @@
 package com.cristianml.service.impl;
 
+import com.cristianml.models.MakerModel;
 import com.cristianml.models.ProductModel;
+import com.cristianml.persistence.IMakerDAO;
 import com.cristianml.persistence.IProductDAO;
 import com.cristianml.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +42,16 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<ProductModel> findByPriceInRange(BigDecimal minPrice, BigDecimal maxPrice) {
         return this.productDAO.findByPriceInRange(minPrice, maxPrice);
+    }
+
+    // Método para verificar si existen productos relacionado con un maker
+    @Override
+    public boolean existsRegisterByMaker(Long idMaker) {
+        MakerModel makerModel = new MakerModel();
+        makerModel.setId(idMaker);
+        if (productDAO.existsRegisterByMaker(idMaker)) {
+            return true;
+        }
+        return false;
     }
 }

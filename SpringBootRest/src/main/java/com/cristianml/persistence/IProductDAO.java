@@ -1,5 +1,6 @@
 package com.cristianml.persistence;
 
+import com.cristianml.models.MakerModel;
 import com.cristianml.models.ProductModel;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,9 @@ public interface IProductDAO {
 
     void deleteById(Long id);
 
-    // Método para obtener una lista de prodcutos en un rango dado refereido a los precios
+    // Método para obtener una lista de productos en un rango dado referido a los precios
     List<ProductModel> findByPriceInRange(BigDecimal minPrice, BigDecimal maxPrice);
 
+    // Método para verificar si existen productos relacionado con un maker
+    boolean existsRegisterByMaker(Long makerModel);
 }

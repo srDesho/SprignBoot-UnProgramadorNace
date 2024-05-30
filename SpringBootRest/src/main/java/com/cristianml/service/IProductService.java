@@ -1,5 +1,6 @@
 package com.cristianml.service;
 
+import com.cristianml.models.MakerModel;
 import com.cristianml.models.ProductModel;
 
 import java.math.BigDecimal;
@@ -21,4 +22,6 @@ public interface IProductService {
     // Método para obtener una lista de prodcutos en un rango dado refereido a los precios
     List<ProductModel> findByPriceInRange(BigDecimal minPrice, BigDecimal maxPrice);
 
+    // Método para verificar si existen productos relacionado con un maker
+    boolean existsRegisterByMaker(Long idMaker);
 }

@@ -1,5 +1,6 @@
 package com.cristianml.persistence.impl;
 
+import com.cristianml.models.MakerModel;
 import com.cristianml.models.ProductModel;
 import com.cristianml.persistence.IProductDAO;
 import com.cristianml.repository.ProductRepository;
@@ -38,6 +39,16 @@ public class ProductDAOImpl implements IProductDAO {
     @Override
     public List<ProductModel> findByPriceInRange(BigDecimal minPrice, BigDecimal maxPrice) {
         return this.productRepository.findProductModelByPriceBetween(minPrice, maxPrice);
+    }
+
+    @Override
+    public boolean existsRegisterByMaker(Long idMaker) {
+        MakerModel makerModel = new MakerModel();
+        makerModel.setId(idMaker);
+        if (productRepository.existsByMaker(makerModel)) {
+            return true;
+        }
+        return false;
     }
 
 
