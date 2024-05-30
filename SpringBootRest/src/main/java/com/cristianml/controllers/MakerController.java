@@ -35,7 +35,7 @@ public class MakerController {
         if (makerOptional.isPresent()) {
             MakerModel maker = makerOptional.get();
 
-            // Convertimos la entidad a un módelo en este caso manualmente, ya que ya existen librerias para convertir
+            // Convertimos la entidad a un modelo en este caso manualmente, ya que ya existen librerias para convertir
             // librerías como MapStruct
             MakerDTO makerDto = MakerDTO.builder()
                     .id(maker.getId())
