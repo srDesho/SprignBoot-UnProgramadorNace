@@ -2,6 +2,7 @@ package com.cristianml.controllers;
 
 import com.cristianml.controllers.dto.MakerDTO;
 import com.cristianml.models.MakerModel;
+import com.cristianml.service.IMakerService;
 import com.cristianml.service.impl.MakerServiceImpl;
 import com.cristianml.utilities.Utilities;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 public class MakerController {
 
     @Autowired
-    private MakerServiceImpl makerService;
+    private IMakerService makerService;
 
     // Método obtener por id
     @GetMapping("/maker/{id}")
