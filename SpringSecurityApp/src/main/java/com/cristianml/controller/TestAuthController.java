@@ -33,8 +33,26 @@ package com.cristianml.controller;
 // 1. Principal: Es donde se guarda la información general del usuario (contraseñas, correos, etc).
 // 2. Authorities: Es donde se guardan los permisos.
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/auth")
 public class TestAuthController {
 
+    // Spring Security nos crea la configuración por defecto con tan sólo agregar la dependencia en pom.xml
+    // Para probar estos endpoints en postman:
+    // Nos ubicamos en la pestaña authorization y seleccionamos el tipo que necesitamos, en este caso Basic Auth
+    // luego agregamos el nombre de usuario y contraseña que configuramos en nuestro application.properties.
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello world";
+    }
 
+    @GetMapping("/hello-secured")
+    public String helloSecured() {
+        return "Hello world Secured";
+    }
 
 }
