@@ -34,9 +34,7 @@ package com.cristianml.controller;
 // 2. Authorities: Es donde se guardan los permisos.
 
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -47,22 +45,51 @@ public class TestAuthController {
     // Para probar estos endpoints en postman:
     // Nos ubicamos en la pestaña authorization y seleccionamos el tipo que necesitamos, en este caso Basic Auth
     // luego agregamos el nombre de usuario y contraseña que configuramos en nuestro application.properties.
-    @GetMapping("/hello")
-    @PreAuthorize("permitAll()")
-    public String hello() {
-        return "Hello world";
-    }
 
-    @GetMapping("/hello-secured")
+    // Creamos controladores simples para hacer las pruebas de la autorizaciones en postman
+
+    // Este es nuestro scrip para ver los roles y permisos de los usuarios:
+    /* SELECT
+        u.username,
+        u.password,
+        r.role_name AS role_name,
+        p.name AS permission_name
+    FROM
+        users u
+            INNER JOIN
+        user_roles ur ON u.id = ur.user_id
+            INNER JOIN
+        roles r ON ur.role_id = r.id
+            INNER JOIN
+        role_permission rp ON r.id = rp.role_id
+            INNER JOIN
+        permissions p ON rp.permission_id = p.id; */
+    @GetMapping("/get")
     @PreAuthorize("hasAuthority('READ')")
-    public String helloSecured() {
-        return "Hello world Secured";
+    public String helloGet(){
+        return "Hello World - GET";
     }
 
-    @GetMapping("/hello-secured2")
-    @PreAuthorize("hasAuthority('CREATE')")
-    public String helloSecured2() {
-        return "Hello world Secured2";
+    @PostMapping("/post")
+    @PreAuthorize("hasAuthority('CREATE') or hasAuthority('READ')")
+    public String helloPost(){
+        return "Hello World - POST";
+    }
+
+    @PutMapping("/put")
+    public String helloPut(){
+        return "Hello World - PUT";
+    }
+
+    @DeleteMapping("/delete")
+    public String helloDelete(){
+        return "Hello World - DELETE";
+    }
+
+    @PatchMapping("/patch")
+    @PreAuthorize("hasAuthority('REFACTOR')")
+    public String helloPatch(){
+        return "Hello World - PATCH";
     }
 
 }
