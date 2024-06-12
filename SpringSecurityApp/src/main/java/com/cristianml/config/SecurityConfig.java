@@ -92,34 +92,17 @@ public class SecurityConfig {
 
     // Definimos nuestro proveedor con AuthenticationProvider
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    // Inyectamos nuesto userDetailsServide
+    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
         // En este caso usaremos este proveedor Dao porque es el que se encarga de traer los datos de la la DB
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         // Seteamos los 2 componentes que requiere nuestro proveedor
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(userDetailsService);
         return provider;
     }
 
-    // Definimos nuestro UserDetailsService y Creamos una lista de usuarios simulando que vienen de una base de datos
-    // Éste método lo que hace es guardar el usuario en memoria
-    @Bean
-    public UserDetailsService userDetailsService() {
-        List<UserDetails> userDetailsList = new ArrayList<>();
-        userDetailsList.add(User.withUsername("cristian")
-                .password("123456")
-                .roles("ADMIN")
-                .authorities("READ", "CREATE")
-                .build());
 
-        userDetailsList.add(User.withUsername("daniel")
-                .password("123456")
-                .roles("User")
-                .authorities("READ")
-                .build());
-
-        return new InMemoryUserDetailsManager(userDetailsList);
-    }
 
     // Defiminos nuestro PaswordEncoder
     @Bean
