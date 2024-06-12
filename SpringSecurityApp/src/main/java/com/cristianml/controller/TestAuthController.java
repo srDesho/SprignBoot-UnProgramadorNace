@@ -38,7 +38,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
-@PreAuthorize("denyAll()")
+// @PreAuthorize("denyAll()")
 public class TestAuthController {
 
     // Spring Security nos crea la configuración por defecto con tan sólo agregar la dependencia en pom.xml
@@ -71,7 +71,7 @@ public class TestAuthController {
     }
 
     @PostMapping("/post")
-    @PreAuthorize("hasAuthority('CREATE') or hasAuthority('READ')")
+    // @PreAuthorize("hasAuthority('CREATE') or hasAuthority('READ')")
     public String helloPost(){
         return "Hello World - POST";
     }
@@ -87,7 +87,7 @@ public class TestAuthController {
     }
 
     @PatchMapping("/patch")
-    @PreAuthorize("hasAuthority('REFACTOR')")
+    // @PreAuthorize("hasAuthority('REFACTOR')")
     public String helloPatch(){
         return "Hello World - PATCH";
     }

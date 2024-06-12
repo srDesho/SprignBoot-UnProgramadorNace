@@ -30,7 +30,7 @@ public class SecurityConfig {
 
     // Spring security nos dice que el primer componente que tenemos que configurar es el Security Filter Chain
     // Anotamos un bean para que Spring sepa que es un método que debe ser configurado y Manejado por él.
-    /*@Bean
+    @Bean
     // HttpSecurity es el objeto que se pasa por todos los filtros, o sea es la solicitud http request
     public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity) throws Exception {
         // Configuramos las condiciones de seguridad
@@ -50,12 +50,17 @@ public class SecurityConfig {
                 // Damos los permisos a nuestros endpoints
                 .authorizeHttpRequests( http -> {
                     // Configurar endpoints públicos.
-                    // Definimos que éste endpoint puede ser accesado por todos
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
+                    // Definimos que éste endpoint puede ser accesado por todos con .permitAll()
+                    http.requestMatchers(HttpMethod.GET, "/auth/get").permitAll();
 
                     // Configurar endpoints privados
-                    // .hasAuthority indica que el endpoint tiene que tener una autorización.
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello-secured").hasAuthority("CREATE");
+                    // Podemos validar por Roles o Authorities
+                    // .hasRole indica indica que el endpoint puede ser accesado por dicho rol dado.
+                    // .hasAnyRole indica que el endpoint tiene que tener una o varias validaciones por roles.
+                    // .hasAuthority indica que el endpoint tiene que tener una validación por autorización.
+                    // .hasAnyAuthority indica que el endpoint puede tener una o varias validaciones por autorizaciones.
+                    http.requestMatchers(HttpMethod.POST, "/auth/post").hasAnyRole("ADMIN", "DEVELOPER");
+                    http.requestMatchers(HttpMethod.PATCH, "/auth/patch").hasAnyAuthority("REFACTOR");
 
                     // Configurar el resto de endpoints no especificados
                     // Por ultimo hacemos que cualquier otro request diferente a los que no especificamos anteriormente
@@ -65,10 +70,10 @@ public class SecurityConfig {
 
                 })
                 .build();
-    }*/
+    }
 
     // Hacemos lo siguiente para uso de anotaciones desde nuestro controlador
-    @Bean
+    /*@Bean
     // HttpSecurity es el objeto que se pasa por todos los filtros, o sea es la solicitud http request
     public SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity) throws Exception {
         // Configuramos las condiciones de seguridad
@@ -82,7 +87,7 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
-    }
+    }*/
 
     // Creamos nuestro componente AuthenticationManager que es el que se encargar de administrar la autenticación.
     @Bean
