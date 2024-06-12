@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -112,8 +113,22 @@ public class SecurityConfig {
     // Defiminos nuestro PaswordEncoder
     @Bean
     public PasswordEncoder passwordEncoder(){
-        // Retornamos NoOpPasswordEncoder que es el que no encripta y está deprecado pero en éste caso sólo será de prueba
-        return NoOpPasswordEncoder.getInstance();
+        // Retornamos BCryptPasswordEncoder para encriptar nuestras contraseñas ya que nunca se debe trabajar con las
+        // contraseñas visibles en la DB.
+        return new BCryptPasswordEncoder();
     }
+
+    // Éste método es para crear una contraseña encriptada.
+
+    /*public static void main(String[] args) {
+        System.out.println(new BCryptPasswordEncoder().encode("123456"));
+    }*/
+
+    // Podemos crear contraseñas encriptadas desde un controlador que registra usuarios de la siguiente manera:
+    // this.bCryptPasswordEncoder.encode(usuario.getPassword()) <-- pasamos ésta línea como parámetro del constructor
+    // que tengamos en nuestro UserModel. Ejemplo:
+
+    /* UsuarioModel guardar = this.usuarioService.guardar(new UsuarioModel(usuario.getNombre(), usuario.getCorreo()
+            , usuario.getTelefono(), this.bCryptPasswordEncoder.encode(usuario.getPassword()), 1, null)); */
 
 }
