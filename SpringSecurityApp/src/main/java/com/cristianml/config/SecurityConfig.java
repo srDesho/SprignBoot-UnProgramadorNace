@@ -1,5 +1,6 @@
 package com.cristianml.config;
 
+import com.cristianml.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -99,7 +100,7 @@ public class SecurityConfig {
     // Definimos nuestro proveedor con AuthenticationProvider
     @Bean
     // Inyectamos nuesto userDetailsServide
-    public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService) {
+    public AuthenticationProvider authenticationProvider(UserDetailsServiceImpl userDetailsService) {
         // En este caso usaremos este proveedor Dao porque es el que se encarga de traer los datos de la la DB
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         // Seteamos los 2 componentes que requiere nuestro proveedor
