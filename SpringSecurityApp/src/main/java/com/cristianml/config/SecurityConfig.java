@@ -27,7 +27,7 @@ import java.util.List;
 
 @Configuration // Le decimos a spring que será una clase de configuración.
 @EnableWebSecurity // Habilitamos la seguridad web
-@EnableMethodSecurity // Permite hacer configuraciones con antoción, aunque se puede omitir.
+@EnableMethodSecurity // Permite hacer configuraciones con anotaciones, aunque se puede omitir.
 public class SecurityConfig {
 
     // Spring security nos dice que el primer componente que tenemos que configurar es el Security Filter Chain
@@ -42,9 +42,9 @@ public class SecurityConfig {
                 // en una aplicación web en la que están autenticados.
                 // Si estamos trabajando con ApisRest no necesitamos activarlo, así que lo desactivaremos.
                 .csrf(csrf -> csrf.disable())
-                // Definimos que se va a trabajar con una autorización básica de sólo usuario y contraseña.
+                // Definimos que se va a trabajar con una autorización básica de sólo usuario y contraseña (Esto para ApisRest).
                 .httpBasic(Customizer.withDefaults())
-                // Si trabajamos con aplicaciones web, debemos configurarlo con sesión sin estado para que no se cree un
+                // Si trabajamos con apis Rest, debemos configurarlo con sesión sin estado para que no se cree un
                 // objeto de sesión pesado, haremos que sea como en las páginas que cuando estás un tiempo sin dar señales
                 // éste cierre sesión, o sea el stateless no nos va a guardar sesión en memoria, sino que va a depender
                 // de la expiración del token.
@@ -91,7 +91,7 @@ public class SecurityConfig {
                 .build();
     }*/
 
-    // Creamos nuestro componente AuthenticationManager que es el que se encargar de administrar la autenticación.
+    // Creamos nuestro componente AuthenticationManager que es el que se encarga de administrar la autenticación.
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -99,7 +99,7 @@ public class SecurityConfig {
 
     // Definimos nuestro proveedor con AuthenticationProvider
     @Bean
-    // Inyectamos nuesto userDetailsServide
+    // Inyectamos nuesto userDetailsServise
     public AuthenticationProvider authenticationProvider(UserDetailsServiceImpl userDetailsService) {
         // En este caso usaremos este proveedor Dao porque es el que se encarga de traer los datos de la la DB
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
