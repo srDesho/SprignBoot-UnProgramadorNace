@@ -7,3 +7,7 @@ Y
 )src/main/java/com/cristianml/Example.java,f\4\f4c24f8291efdc1ff7824ff9f436b981f3af3abd
 ]
 -src/test/java/com/cristianml/ExampleTest.java,b\c\bce427784b74f31cf9b80e90148fdc0e0e7035fd
+Z
+*src/main/java/com/cristianml/Example2.java,6\0\6003fb1f5610735c2313c5eb18581bf83e428fd2
+^
+.src/test/java/com/cristianml/Example2Test.java,9\1\91bf190fba8f3114459aef65c6075b725cf1eef1
