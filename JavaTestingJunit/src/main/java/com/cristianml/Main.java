@@ -25,7 +25,7 @@ public class Main {
     // Creamos el método que queremos testear con el mismo nombre del método, pero al comienzo escribimos test:
 
     // Hay que saber que siempre por defecto los tests deben pasar siempre aprueban.
-
+    // Los test nunca devuelven nada siempre son void sus métodos.
     public static void main(String[] args) {
 
 
