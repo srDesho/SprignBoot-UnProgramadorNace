@@ -131,5 +131,17 @@ public class Example2Test {
         // Then
         assertTrue(result);
     }
-    
+
+    // Ejercicio 5
+    @Test
+    public void testRevertirCadena() {
+        // Given
+        String cadena = "perro";
+
+        // When
+        String result = this.example.revertirCadena(cadena);
+
+        // Then
+        assertEquals("orrep", result);
+    }
 }
