@@ -225,4 +225,21 @@ public class Example2Test {
 
     }
 
+    // Ejercicio 8
+    @Test
+    // No hay problemas con agregar throws en nuestros tests
+    public void testMensajeConRetraso() throws InterruptedException {
+        // Given
+        // En este caso no necesito escribir nada aquí porque mi método no recibe parámetros
+
+        // When
+        String result = this.example.mensajeConRetraso();
+
+        // Then
+        // En este ejercicio se está usando la clase Thread que es para pausar por segundos una ejecución.
+        // Esto no se testea porque no afecta en nada, lo que sí debemos testear es el retorno, y este método nos
+        // está retornando una cadena de texto.
+        assertEquals("Listo después de retraso", result);
+    }
+    
 }
