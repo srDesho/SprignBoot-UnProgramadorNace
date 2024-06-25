@@ -144,4 +144,30 @@ public class Example2Test {
         // Then
         assertEquals("orrep", result);
     }
+
+    // Ejercicio 6
+    @Test
+    public void testFactorial() {
+        // Given
+        int number = 4;
+
+        // When
+        long result = this.example.factorial(number);
+
+        // Then
+        assertEquals(24, result);
+    }
+
+    // Camino del error, exception en el método
+    @Test
+    public void testFactorialError() {
+        // Given
+        int  number = -4;
+
+        // Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            example.factorial(number);
+        });
+    }
+
 }
