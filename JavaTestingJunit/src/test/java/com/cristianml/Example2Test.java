@@ -104,7 +104,21 @@ public class Example2Test {
 
     }
 
-    
+    // Ejercicio 3
+    @Test
+    public void testContarLetrasA() {
+        // Given
+        String cadena = "unprogramadornace";
+
+        // When
+        int result = example.contarLetrasA(cadena);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(3, result);
+    }
+
+
 
 
 }
