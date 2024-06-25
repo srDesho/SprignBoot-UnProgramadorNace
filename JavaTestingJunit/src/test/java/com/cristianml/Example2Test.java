@@ -170,4 +170,59 @@ public class Example2Test {
         });
     }
 
+    // Ejercicio 7
+    @Test
+    public void testEsPrimo() {
+        // Given
+        int number = 3;
+
+        // When
+        boolean result = this.example.esPrimo(number);
+
+        // Then
+        assertTrue(result);
+    }
+
+    // Verificamos que tenga que ser mayor a 4 porque así está el método
+    @Test
+    public void testEsPrimoMayorACuatro() {
+        // Given
+        int number = 7;
+
+        // When
+        boolean result = this.example.esPrimo(number);
+
+        // Then
+        assertTrue(result);
+    }
+
+    // camino de cuando es menor o igual a 1
+    @Test
+    public void testEsPrimoMenorAUno() {
+        // Given
+        int number = 1;
+
+        // When
+        boolean result = this.example.esPrimo(number);
+
+        // Then
+        assertFalse(result);
+    }
+
+    // camino cuando es mayor que uno pero no es factorial
+    @Test
+    public void testNoEsPrimo() {
+
+        // Given
+        int number = 8;
+
+        // When
+        boolean result = this.example.esPrimo(number);
+
+
+        // Then
+        assertFalse(result);
+
+    }
+
 }
