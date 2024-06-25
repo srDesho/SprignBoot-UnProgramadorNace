@@ -118,7 +118,18 @@ public class Example2Test {
         assertEquals(3, result);
     }
 
+    // Ejercicio 4
+    @Test
+    public void testContieneElemento() {
+        // Given
+        List<String> countries = List.of("Bolivia", "España", "Colombia");
+        String country = "Bolivia";
 
+        // When
+        boolean result = example.contieneElemento(countries, country);
 
-
+        // Then
+        assertTrue(result);
+    }
+    
 }
