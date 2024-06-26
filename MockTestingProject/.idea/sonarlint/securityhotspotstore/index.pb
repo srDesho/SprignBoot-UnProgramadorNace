@@ -18,3 +18,7 @@ b
 2src/main/java/org/mock/service/IPlayerService.java,9\4\94803dca190d675e85e21016b53774700acc5fdf
 e
 5src/main/java/org/mock/service/PlayerServiceImpl.java,a\c\aca27229517b69fab458aad656a9e46703c88bd6
+i
+9src/test/java/org/mock/service/PlayerServiceImplTest.java,a\5\a522d28af6f9160edef77ac63b7bd58432ad7fb7
+X
+(src/main/java/org/mock/DataProvider.java,b\1\b148cbb14f040ced6cdae894816419d1bf98a4a5
