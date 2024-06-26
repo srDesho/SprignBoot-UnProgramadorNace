@@ -254,5 +254,42 @@ public class Example2Test {
         // Then
         assertEquals(List.of("1", "2", "3", "4", "5"), result);
     }
-    
+
+    // Ejercicio 10
+    @Test
+    public void testCalcularMedia() {
+        // Given
+        List<Integer> lista = List.of(3,3,3);
+
+        // When
+        double resutl = this.example.calcularMedia(lista);
+
+        // Then
+        assertEquals(3, resutl);
+    }
+
+    @Test
+    public void testCalcularMediaNull() {
+        // Given
+        List<Integer> lista = null;
+
+        // Ya sabemos que en casos de arrojar throws (errores) el When va junto con Then
+        // When - Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.example.calcularMedia(lista);
+        });
+    }
+
+    @Test
+    public void testCalcularMediaEmpty() {
+        // Given
+        List<Integer> lista = Collections.emptyList();
+
+        // Ya sabemos que en casos de arrojar throws (errores) el When va junto con Then
+        // When - Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            this.example.calcularMedia(lista);
+        });
+    }
+
 }
