@@ -81,5 +81,27 @@ public class PlayerServiceImplTest {
         assertEquals("Lionel Messi", result.get(0).getName());
         assertEquals("Inter Miami", result.get(0).getTeam());
         assertEquals("Delantero", result.get(0).getPosition());
+        // Con verify hacemos que verifique que nuestra dependencia esté llamando al método que necesitamos.
+        verify(this.playerRepository).findAll();
+    }
+
+    // Test para el findById
+    @Test
+    public void testFindById() {
+        // Given
+        Long id = 1L;
+
+        // When
+        // El anyLong() sirve para que se refiera a cualquier número long, lo ponemos porque no es necesario
+        // pasarle un id en específico.
+        when(playerRepository.findById(anyLong())).thenReturn(DataProvider.playerMock());
+        Player player= this.playerService.findById(id);
+
+        // Then
+        assertNotNull("Lionel Messi", player.getName());
+        assertNotNull("Inter Miami", player.getTeam());
+        assertNotNull("Delantero", player.getPosition());
+        // Con verify hacemos que verifique que nuestra dependencia esté llamando al método que necesitamos.
+        verify(this.playerRepository).findById( anyLong() );
     }
 }

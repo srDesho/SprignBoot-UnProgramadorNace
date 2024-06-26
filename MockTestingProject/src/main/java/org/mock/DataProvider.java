@@ -20,4 +20,7 @@ public class DataProvider {
         );
     }
 
+    public static Player playerMock() {
+        return new Player(1L, "Lionel Messi", "Inter Miami", "Delantero");
+    }
 }
