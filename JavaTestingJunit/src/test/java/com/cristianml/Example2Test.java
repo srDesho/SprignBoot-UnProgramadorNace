@@ -292,4 +292,17 @@ public class Example2Test {
         });
     }
 
+    // Ejercicio 11
+    @Test
+    public void testConcertirListaAString() {
+        // Given
+        List<String> listaNumeros = List.of("1", "2", "3");
+
+        // When
+        String lista = this.example.convertirListaAString(listaNumeros);
+
+        // Then
+        assertEquals("1,2,3", lista);
+
+    }
 }
