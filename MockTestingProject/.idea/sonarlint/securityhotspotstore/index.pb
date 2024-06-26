@@ -14,3 +14,7 @@ t
 Dsrc/main/java/org/mock/persistence/repository/IPlayerRepository.java,4\4\44453149054a9a7ea65fee31fad613df141d5ba7
 w
 Gsrc/main/java/org/mock/persistence/repository/PlayerRepositoryImpl.java,a\0\a0ebb87ddceb911e3b16065b7059faf7bb9f02f3
+b
+2src/main/java/org/mock/service/IPlayerService.java,9\4\94803dca190d675e85e21016b53774700acc5fdf
+e
+5src/main/java/org/mock/service/PlayerServiceImpl.java,a\c\aca27229517b69fab458aad656a9e46703c88bd6
