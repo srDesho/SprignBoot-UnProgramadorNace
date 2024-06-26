@@ -241,5 +241,18 @@ public class Example2Test {
         // está retornando una cadena de texto.
         assertEquals("Listo después de retraso", result);
     }
+
+    // Ejercicio 9
+    @Test
+    public void testConvertirAString() {
+        // Given
+        List<Integer> numberList = List.of(1, 2, 3, 4, 5);
+
+        // When
+        List<String> result = this.example.convertirAString(numberList);
+
+        // Then
+        assertEquals(List.of("1", "2", "3", "4", "5"), result);
+    }
     
 }
