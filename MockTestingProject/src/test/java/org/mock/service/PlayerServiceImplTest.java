@@ -154,4 +154,17 @@ public class PlayerServiceImplTest {
         // Podemos hacer assertEquals gracias al ArgumentCaptor
         assertEquals(1L, longArgumentCaptor.getValue());
     }
+
+    // Cómo quitar los WARNING que nos aparecen en la consola.
+    // Esto lo ocasiona el nuevo jdk de Java 21, solución:
+    
+    // Debemos eliminar cada uno de nuestros ejecutadores, estos los ubicamos dando clic en el lado izquierdo del
+    // botón run de la parte de arriba de intellij -> clic en edit configurations -> eliminar todos con la tecla supr
+    // -> clic en ok apply y ok -> luego corremos esta clase que es donde estamos testeando pero desde el comienzo,
+    // o sea de la parte de arriba donde se encuentra el nombre de nuestra clase, la corremos desde ahí
+    // -> volvemos a edit configuration y veremos que nos apareció uno nuevo con el mismo nombre de nuestra clase y
+    // damos clic -> nos dirigimos en la parte que se agregan comandos generalmente hay un comando "-ea", pegamos ahí
+    // este comando sin comillas "-ea -XX:+EnableDynamicAgentLoading -Xshare:off" -> apply y ok.
+    // Luego de hacer eso siempre debemos correr el proyecto desde el nombre de la clase o desde el botón run.
+
 }
