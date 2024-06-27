@@ -5,6 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mock.DataProvider;
 import org.mock.persistence.entity.Player;
 import org.mock.persistence.repository.PlayerRepositoryImpl;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -29,7 +30,7 @@ public class PlayerServiceImplTest {
     // base de datos, esta db siempre está en constante cambio, y entonces cuando no exista un registro que le damos
     // a nuestro test por ejemplo: "Leonel Mesi"
 
-    // En este caso tenemos los datos del objeto(Player) en la posición 0, pero como siempre va a cambiar pues en
+    // En este caso tenemos los datos del objeto(Player) en la posición 0, pero como siempre va a cambiar, pues en
     // cualquier momento no pasará la prueba el test y eso es malo.
 
     /*@Test
@@ -85,7 +86,7 @@ public class PlayerServiceImplTest {
         verify(this.playerRepository).findAll();
     }
 
-    // Test para el findById
+    // Test para el método findById()
     @Test
     public void testFindById() {
         // Given
@@ -103,5 +104,37 @@ public class PlayerServiceImplTest {
         assertNotNull("Delantero", player.getPosition());
         // Con verify hacemos que verifique que nuestra dependencia esté llamando al método que necesitamos.
         verify(this.playerRepository).findById( anyLong() );
+
+        // NOTA: Cuando usas métodos de aserción (assert) para verificar el estado final o el resultado de un método
+        // en tus pruebas, no siempre es necesario usar verify de Mockito. Los métodos de aserción se utilizan
+        // principalmente para pruebas de estado, mientras que verify de Mockito se utiliza para pruebas de comportamiento.
     }
+
+    // Test para el método save()
+    // Aquí trabajaremos cuando un método no nos da respuesta, o sea es un void
+    @Test
+    public void testSave() {
+
+        // Given
+        Player player = DataProvider.newPlayerMock();
+
+        // When
+        this.playerService.save(player);
+
+        // Then
+        // Podemos capturar el objeto guardado en caso de que lo requiramos. lo hacemos con la clase ArgumentCaptor
+        ArgumentCaptor<Player> playerArgumentCaptor = ArgumentCaptor.forClass(Player.class);
+
+        // Verificar que el método save fue llamado.
+        // verify(this.playerRepository).save(any(Player.class));
+
+        // Verificar que el método save fue llamado y capturamos con el método "capture" el objeto guardado.
+        verify(this.playerRepository).save(playerArgumentCaptor.capture());
+        assertEquals(10L, playerArgumentCaptor.getValue().getId());
+        assertEquals("Luiz Diaz", playerArgumentCaptor.getValue().getName());
+
+        // NOTA: El ArgumentCaptor no se usa siempre, pero nos puede ayudar a verificar el argumento, ya que en la parte
+        // del When no se puede validar directamente la respuesta porque es un método vacío.
+    }
+
 }
