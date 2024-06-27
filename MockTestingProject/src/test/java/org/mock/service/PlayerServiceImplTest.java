@@ -137,4 +137,21 @@ public class PlayerServiceImplTest {
         // del When no se puede validar directamente la respuesta porque es un método vacío.
     }
 
+    // Test para el método deleteById
+    @Test
+    public void testDeleteById() {
+        // Given
+        Long id = 1L;
+
+        // When
+        this.playerService.deleteById(id);
+
+        // Then
+        ArgumentCaptor<Long> longArgumentCaptor = ArgumentCaptor.forClass(Long.class);
+        // Podemos usar 2 o más verificadores de Mockito
+        verify(this.playerRepository).deleteById(anyLong());
+        verify(this.playerRepository).deleteById(longArgumentCaptor.capture());
+        // Podemos hacer assertEquals gracias al ArgumentCaptor
+        assertEquals(1L, longArgumentCaptor.getValue());
+    }
 }
