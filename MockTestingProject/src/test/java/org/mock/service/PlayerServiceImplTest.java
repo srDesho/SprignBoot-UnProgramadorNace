@@ -167,4 +167,28 @@ public class PlayerServiceImplTest {
     // este comando sin comillas "-ea -XX:+EnableDynamicAgentLoading -Xshare:off" -> apply y ok.
     // Luego de hacer eso siempre debemos correr el proyecto desde el nombre de la clase o desde el botón run.
 
+    // Para excluir o exonerar clases que no se deben hacer testing como por ejemplo en Main.class, clases puramente
+    // de configuración, las entidades, clases DTOs, controladores REST/servicios Web, clases externas o de librerias.
+    // Debemos agregar la configuración y el exclude en el plugin jacoco que agregamos en nuestro pom.xml de la
+    // siguiente manera:
+
+    // Ubicamos la etiqueta <execution> dentro debe estar el goal report y agregamos debajo de la etiqueta que cierra
+    // </goals> la etiqueta <configuration>, dentro de configuration agregamos <excludes> y dentro agregamos etiquetas
+    // <exclude> el doble **/ para hayar las rutas y el nombre de la clase que se va a excluir:
+
+//                    <execution>
+//                        <id>report</id>
+//                        <phase>test</phase>
+//                        <goals>
+//                            <goal>report</goal>
+//                        </goals>
+//                        <configuration>
+//                            <excludes>
+//                                <exclude>**/Main.class</exclude>
+//                                <exclude>**/entity/Player.class</exclude>
+//                            </excludes>
+//                        </configuration>
+//                    </execution>
+
+
 }
