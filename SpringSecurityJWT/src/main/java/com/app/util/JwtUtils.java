@@ -1,7 +1,11 @@
 package com.app.util;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -65,6 +69,25 @@ public class JwtUtils {
         return jwtToken;
     }
 
-    // Método para decodificar el token
+    // Método para decodificar y validar el token
+    public DecodedJWT validateToken(String token) {
+        // Lo envolvemos en un try catch
+        try {
+            // Necesitamos el algoritmo al igual que en el método createToken
+            Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
+
+            // Creamos el objeto verificador y pasamos el algoritmo en el método .require()
+            JWTVerifier verifier = JWT.require(algorithm)
+                    // Pasamos el usuario generador de token(el cual es nuestro backend)
+                    .withIssuer(this.userGenerator)
+                    .build();
+            // Creamos el objeto decodificador y verificamos con el método .verify(token)
+            DecodedJWT decodedJWT = verifier.verify(token);
+            return decodedJWT;
+
+        } catch (JWTVerificationException e) {
+            throw new JWTVerificationException("Token invalid, not Authorized.");
+        }
+    }
 
 }
