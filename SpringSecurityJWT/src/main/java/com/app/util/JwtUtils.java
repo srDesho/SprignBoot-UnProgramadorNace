@@ -1,7 +1,15 @@
 package com.app.util;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 // Esta será nuestra clase de utilería para JWT
 @Component
@@ -22,5 +30,41 @@ public class JwtUtils {
     @Value("${security.jwt.user.generator}")
     private String userGenerator;
 
+    // Método para crear token
+    public String createToken(Authentication authentication) {
+        // Definimos el tipo de algoritmo con el que se va a encriptar y le pasamos nuestra clave secreta.
+        Algorithm algorithm = Algorithm.HMAC256(this.privateKey); // HMAC256 es el más común que se usa
+        // Obtenemos el username autenticado desde nuestro objeto Authentication
+        String username = authentication.getPrincipal().toString();
+        // Obtenemos nuestros permisos en un string donde cada permiso debe estar separado por comas.
+        String authorities = authentication.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                // el .collect junto con el joining me permiten agregar la coma.
+                .collect(Collectors.joining(","));
+
+        // Creamos el token con nuestras propiedades
+        String jwtToken = JWT.create()
+                // Aquí pasamos nuestro usuario generador o sea nuestro backend
+                .withIssuer(this.userGenerator)
+                // Agregamos el sujeto al cual le vamos a generar un token
+                .withSubject(username)
+                // Agregamos los cleams(que es el cuerpo de nuestro token, y en este caso son los permisos)
+                .withClaim("authorities", authorities)
+                // agregamos la fecha en que se crea el token
+                .withIssuedAt(new Date())
+                // tiempo de expiración en milisegundos, en este caso agregaremos 30 min para que expire nuestro token
+                .withExpiresAt(new Date(System.currentTimeMillis() + 1800000))
+                // asignamos un id convertido a string al token, este id lo generamos con UUID
+                .withJWTId(UUID.randomUUID().toString())
+                // definimos desde qué momento el token se va a considerar válido, o sea podemos agregar en cuantas
+                // horas o minutos el token va a poder usarse, en este caso será desde el momento que lo creamos.
+                .withNotBefore(new Date(System.currentTimeMillis()))
+                // agregamos la firma la cual es el algoritmo de encriptación con la firma(clave que creamos con hash)
+                .sign(algorithm);
+        return jwtToken;
+    }
+
+    // Método para decodificar el token
 
 }
