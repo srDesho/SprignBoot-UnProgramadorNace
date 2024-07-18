@@ -46,12 +46,15 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
-                    // Configurar los endpoints publicos
+                    // Configurar los endpoints públicos
+                    // Ajustamos nuestro controlador con ruta /auth para que sea público, porque así se generará el token.
                     http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
 
-                    // Cofnigurar los endpoints privados
+                    // Configurar los endpoints privados
+                    // agregamos la ruta /method
                     http.requestMatchers(HttpMethod.POST, "/method/post").hasAnyRole("ADMIN", "DEVELOPER");
                     http.requestMatchers(HttpMethod.PATCH, "/method/patch").hasAnyAuthority("REFACTOR");
+                    http.requestMatchers(HttpMethod.GET, "/method/get").hasAnyRole("INVITED");
 
                     // Configurar el resto de endpoint - NO ESPECIFICADOS
                     http.anyRequest().denyAll();

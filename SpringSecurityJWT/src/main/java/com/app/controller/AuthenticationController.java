@@ -1,5 +1,6 @@
 package com.app.controller;
 
+import com.app.controller.dto.AuthCreateUserRequest;
 import com.app.controller.dto.AuthLoginRequest;
 import com.app.controller.dto.AuthResponse;
 import com.app.service.UserDetailServiceImpl;
@@ -19,8 +20,15 @@ public class AuthenticationController {
     @Autowired
     private UserDetailServiceImpl userDetailService;
 
+    // Este método es para cuando un usuario que ya existe pueda tener generado un token
     @PostMapping("/log-in")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest userRequest) {
         return new ResponseEntity<>(this.userDetailService.loginUser(userRequest), HttpStatus.OK);
+    }
+
+    // Vamos a crear otro método donde se generá token a un usuario que se va a registrar
+    @PostMapping("/sign-up")
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid AuthCreateUserRequest authCreateUser) {
+        return new ResponseEntity<>(this.userDetailService.createUser(authCreateUser), HttpStatus.CREATED);
     }
 }
