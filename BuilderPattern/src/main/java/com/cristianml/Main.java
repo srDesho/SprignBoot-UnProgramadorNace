@@ -10,7 +10,7 @@ public class Main {
         // Este patrón es esencialmente útil cuando tenemos un objeto que se relaciona con diferentes objetos,
         // nos permite crear cada uno de esos objetos utilizando un solo código de construcción.
 
-        
+
 
     }
 }
