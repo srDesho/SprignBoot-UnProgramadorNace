@@ -40,8 +40,8 @@ public class Employee {
         private String name;
         private String gender;
         private Address address;
-        private List<Phone> phoneList;
-        private List<Contact> contactList;
+        private List<Phone> phoneList = new ArrayList<>();
+        private List<Contact> contactList = new ArrayList<>();
 
         // Creamos un constructor vacío
         public EmployeeBuilder() {
