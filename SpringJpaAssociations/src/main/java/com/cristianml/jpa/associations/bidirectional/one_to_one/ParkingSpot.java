@@ -22,8 +22,8 @@ public class ParkingSpot {
     private Long id;
 
     // Hacemos la relación bidireccional escribiendo el atributo mappedBy
-    // El mappedBy nos indica cuál va a ser la entidad relacionada inversa, o sea que será esta la inversa.
-    // pero entre commillas escribimos el mismo nombre que definimos en nuestra entidad principal.
+    // El mappedBy nos indica cuál va a ser la entidad relacionada inversa, o sea que será esta la inversa,
+    // pero entre comillas escribimos el mismo nombre que definimos en nuestra entidad principal.
     @OneToOne(mappedBy = "parkingSpot")
     private Employee employee;
 
