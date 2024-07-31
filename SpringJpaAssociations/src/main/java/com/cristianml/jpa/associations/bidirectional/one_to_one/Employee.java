@@ -1,4 +1,4 @@
-package com.cristianml.jpa.associations.unidirectional.one_to_one;
+package com.cristianml.jpa.associations.bidirectional.one_to_one;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,12 +13,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-@Entity(name = "uni_parking_spot_one_to_one")
-@Table(name = "uni_parking_spot_one_to_one")
-public class ParkingSpot {
+@Entity(name = "bi_employee_one_to_one")
+@Table(name = "bi_employee_one_to_one")
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // Hacemos la relación con la entidad ParkingSpot
+
+    @OneToOne
+    @JoinColumn(name = "parking_spot_id") // esto es para darle el nombre a la columna donde se relaciona el id.
+    private ParkingSpot parkingSpot;
 
 }
