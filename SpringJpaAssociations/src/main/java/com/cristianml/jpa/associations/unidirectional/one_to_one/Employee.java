@@ -5,6 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+// Debemos aprender este concepto para saber cómo funciona la asociación.
+
+// La asociación establece si desde mi entidad actual puedo acceder a la otra entidad relacionada.
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
