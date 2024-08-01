@@ -26,13 +26,10 @@ public class Book {
 
     // La relación en el caso de many to one, la hacemos en la entidad que más nos convenga.
     // Bien podemos crearla aquí o en la entidad Author
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Author.class)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = Author.class)
     // Definimos el nombre de la tabla intermedia que se va a generar(muchos a muchos siempre se genera una 3er tabla)
     @JoinTable(name = "book_author_unidirectional", // nombre de la tercer tabla.
     joinColumns = @JoinColumn(name = "book_id"), // nombre de la columna de nuestra entidad actual
     inverseJoinColumns = @JoinColumn(name = "author_id")) // nombre de la columna de la entidad relacionada
     private List<Author> authorList;
-
-    // De nuevo, esta es una relación unidireccional, porque solo una de las entidades puede acceder a la otra,
-    // en este caso solo puede acceder a los datos de Author la entidad Book y no viceversa.
 }
