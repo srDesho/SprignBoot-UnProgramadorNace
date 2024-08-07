@@ -71,4 +71,15 @@ public class PersonDefaultDTO {
         this.gender = gender;
     }
 
+    @Override
+    public String toString() {
+        return "PersonDefaultDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                '}';
+    }
 }

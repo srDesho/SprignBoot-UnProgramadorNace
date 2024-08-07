@@ -1,6 +1,6 @@
 package com.cristianml.modelmapper.entities;
 
-public class PersoneEntity {
+public class PersonEntity {
 
     private Long id;
     private String name;
@@ -9,10 +9,10 @@ public class PersoneEntity {
     private byte age;
     private Character gender;
 
-    public PersoneEntity() {
+    public PersonEntity() {
     }
 
-    public PersoneEntity(Long id, String name, String lastName, String email, byte age, Character gender) {
+    public PersonEntity(Long id, String name, String lastName, String email, byte age, Character gender) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -67,5 +67,17 @@ public class PersoneEntity {
 
     public void setGender(Character gender) {
         this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return "PersonEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", gender=" + gender +
+                '}';
     }
 }
