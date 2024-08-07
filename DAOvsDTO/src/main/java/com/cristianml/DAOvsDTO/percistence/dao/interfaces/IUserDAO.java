@@ -13,8 +13,8 @@ public interface IUserDAO {
     Optional<UserEntity> findById(Long id);
 
     // En estos siguientes métodos no es necesario enviar los id cuando trabajamos con DAO.
-    UserEntity saveUser(UserEntity userEntity);
-    UserEntity updateUser(UserEntity userEntity);
-    UserEntity deleteUser(UserEntity userEntity);
+    void saveUser(UserEntity userEntity);
+    void updateUser(UserEntity userEntity);
+    void deleteUser(UserEntity userEntity);
 
 }
