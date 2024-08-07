@@ -1,4 +1,4 @@
-package com.cristianml.modelmapper.dto;
+package com.cristianml.orikamapper.dto;
 
 // Esta clase va a ser mapeada con atributos de distinto nombre que los que tiene la entidad principal.
 

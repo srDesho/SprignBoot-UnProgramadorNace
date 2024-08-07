@@ -1,8 +1,6 @@
-package com.cristianml.modelmapper.dto;
+package com.cristianml.orikamapper.entities;
 
-// Ponemos default a este objeto porque es el que va a convertirse o mapearse con los mismos atributos que la entidad.
-
-public class PersonDefaultDTO {
+public class PersonEntity {
 
     private Long id;
     private String name;
@@ -11,10 +9,10 @@ public class PersonDefaultDTO {
     private byte age;
     private Character gender;
 
-    public PersonDefaultDTO() {
+    public PersonEntity() {
     }
 
-    public PersonDefaultDTO(Long id, String name, String lastName, String email, byte age, Character gender) {
+    public PersonEntity(Long id, String name, String lastName, String email, byte age, Character gender) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -73,7 +71,7 @@ public class PersonDefaultDTO {
 
     @Override
     public String toString() {
-        return "PersonDefaultDTO{" +
+        return "PersonEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +

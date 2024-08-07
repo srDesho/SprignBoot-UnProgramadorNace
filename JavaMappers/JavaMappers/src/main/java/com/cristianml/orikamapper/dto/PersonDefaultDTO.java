@@ -1,4 +1,4 @@
-package com.cristianml.modelmapper.dto;
+package com.cristianml.orikamapper.dto;
 
 // Ponemos default a este objeto porque es el que va a convertirse o mapearse con los mismos atributos que la entidad.
 
