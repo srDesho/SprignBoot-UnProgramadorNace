@@ -1,4 +1,4 @@
-package com.cristianml;
+package com.cristianml.modelmapper;
 
 public class Main {
     public static void main(String[] args) {
