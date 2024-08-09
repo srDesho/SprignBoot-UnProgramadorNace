@@ -14,6 +14,7 @@ import org.modelmapper.TypeMap;
 
 public class Main {
     /* Model Mapper - Default */
+    // Este mapeo es cuando tenemos los nombres iguales de los atributos de cada objeto mapeado.
     /* public static void main(String[] args) {
 
         // Creamos nuestro mapeador.
