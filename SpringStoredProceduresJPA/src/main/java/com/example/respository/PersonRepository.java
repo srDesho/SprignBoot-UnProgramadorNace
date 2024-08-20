@@ -35,7 +35,12 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     // Vamos a hacer uso de la anotación @Query
     // el valor será la consulta que se hace para llamar una SP y agregamos el atributo nativeQuery para decirle a JPA
     // que es una consulta nativa de SQL.
-    @Query(value = "CALL verPersonas()", nativeQuery = true)
+    // @Query(value = "CALL verPersonas()", nativeQuery = true)
+    // List<Person> verPersonas();
+
+    // Forma 3
+    // Hacemos uso de la anotación @Procedure
+    @Procedure(name = "verPersonas")
     List<Person> verPersonas();
 
     /* 2. CON PARÁMETROS */
