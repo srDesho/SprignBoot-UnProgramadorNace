@@ -12,7 +12,7 @@ import lombok.*;
 @Entity
 // Usamos la siguiente anotación para que podamos hacer uso de nuestro sp (stored procedure)
 // o en otros términos para poder mapear nuestra SP con JPA.
-@NamedStoredProcedureQuery(
+/*@NamedStoredProcedureQuery(
         // de nombre generalmente se pone el nombre de la clase seguido de un punto y el nombre de nuestro sp de la db.
         name = "Person.buscarPersona",
         // nombre exacto de nuestro SP de la db.
@@ -27,7 +27,7 @@ import lombok.*;
                         name = "person_id", // definimos un nombre
                         type = Long.class) // definimos el tipo del parámetro, en este caso es un id de tipo Long
         }
-)
+)*/
 public class Person {
 
     @Id
