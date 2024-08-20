@@ -39,8 +39,14 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     // List<Person> verPersonas();
 
     // Forma 3
-    // Hacemos uso de la anotación @Procedure
-    @Procedure(name = "verPersonas")
+    // Hacemos uso de la anotación @Procedure simplemente agregamos como atributo el nombre de la SP.
+    // @Procedure(name = "verPersonas")
+    // List<Person> verPersonas();
+
+    // Forma 4
+    // Hacemos uso de la misma anotación @Procedure pero sin darle explícitamente el nombre como atributo.
+    // Pero el nombre del método sí o sí debe de ser el mismo que el nombre del SP de la db.
+    @Procedure
     List<Person> verPersonas();
 
     /* 2. CON PARÁMETROS */
