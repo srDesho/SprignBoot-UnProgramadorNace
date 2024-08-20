@@ -5,6 +5,7 @@ import jakarta.persistence.NamedStoredProcedureQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -46,9 +47,18 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     // Forma 4
     // Hacemos uso de la misma anotación @Procedure pero sin darle explícitamente el nombre como atributo.
     // Pero el nombre del método sí o sí debe de ser el mismo que el nombre del SP de la db.
-    @Procedure
-    List<Person> verPersonas();
+    // @Procedure
+    // List<Person> verPersonas();
 
     /* 2. CON PARÁMETROS */
+    // Forma 1
+
+    @Procedure(name = "Person.buscarPersona")
+    // El nombre del argumento "person_id" debe ser el mismo que definimos en la clase person en la configuración
+    // de la anotación @StoredProcedureParameter(name = "person_id)
+    // Person buscarPersona(Long person_id);
+
+    // Si no también podemos hacer uso del camelCase normal pero para mapear el nombre lo hacemos con un @Param
+    Person buscarPersona(@Param("person_id") Long personId);
 
 }

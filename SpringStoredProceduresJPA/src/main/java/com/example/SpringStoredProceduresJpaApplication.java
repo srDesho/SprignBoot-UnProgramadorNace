@@ -38,11 +38,17 @@ public class SpringStoredProceduresJpaApplication implements CommandLineRunner {
 	// Siempre que trabajemos con invocación de sp debe estar envuelto en un @Transactional
 	@Transactional
 	public void run(String... args) throws Exception {
+		// Aquí trabajaremos con el método verPersonas
 		// Creamos una lista para hacer llamado de nuestra SP (Stored Procedure)
-		List<Person> persons = this.personRepository.verPersonas();
+		// List<Person> persons = this.personRepository.verPersonas();
 
 		// Imprimimos de la siguiente manera.
+		// log.info("\n");
+		// persons.forEach(person -> log.info(person.toString()));
+
+		// Aquí trabajaremos con el método buscarPersona
+		Person person = personRepository.buscarPersona(3L);
 		log.info("\n");
-		persons.forEach(person -> log.info(person.toString()));
+		log.info(person.toString());
 	}
 }
