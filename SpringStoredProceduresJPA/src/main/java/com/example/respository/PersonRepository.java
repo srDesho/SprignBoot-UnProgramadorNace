@@ -90,6 +90,11 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     // Person buscarPersona(Long id); // el nombre del argumento es id, así que este nombre debe ir en la @Query(anterior línea)
 
     // Esto es lo mismo solo que hacemos uso del @Param
-    @Query(value = "CALL buscarPersona(:person_id)", nativeQuery = true)
-    Person buscarPersona(@Param("person_id") Long personId);
+    /*@Query(value = "CALL buscarPersona(:person_id)", nativeQuery = true)
+    Person buscarPersona(@Param("person_id") Long personId);*/
+
+    // Forma 3
+    // Hacemos uso de @Procedure con el atributo name mapeando el nombre de nuestro SP.
+    @Procedure(name = "buscarPersona")
+    Person buscarPersona(Long personId);
 }
