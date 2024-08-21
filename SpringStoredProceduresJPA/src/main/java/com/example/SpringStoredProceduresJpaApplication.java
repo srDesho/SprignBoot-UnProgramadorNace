@@ -47,8 +47,10 @@ public class SpringStoredProceduresJpaApplication implements CommandLineRunner {
 		// persons.forEach(person -> log.info(person.toString()));
 
 		// Aquí trabajaremos con el método buscarPersona
-		Person person = personRepository.buscarPersona(3L);
+		Person person = personRepository.buscarPersona(2L);
 		log.info("\n");
 		log.info(person.toString());
 	}
+
+
 }

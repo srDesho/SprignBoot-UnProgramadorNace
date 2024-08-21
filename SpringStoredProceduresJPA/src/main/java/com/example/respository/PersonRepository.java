@@ -95,6 +95,11 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
 
     // Forma 3
     // Hacemos uso de @Procedure con el atributo name mapeando el nombre de nuestro SP.
-    @Procedure(name = "buscarPersona")
-    Person buscarPersona(Long personId);
+    /*@Procedure(name = "buscarPersona")
+    Person buscarPersona(Long personId);*/
+
+    // Forma 4
+    @Procedure
+    // Nos aseguramos que el nombre del método sea igual que el nombre definido de nuestra SP de la DB.
+    Person buscarPersona(Long idPerson);
 }
