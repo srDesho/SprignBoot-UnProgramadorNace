@@ -102,4 +102,8 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     @Procedure
     // Nos aseguramos que el nombre del método sea igual que el nombre definido de nuestra SP de la DB.
     Person buscarPersona(Long idPerson);
+
+    // Trabajamos con los siguientes procedimientos almacenados de nuestra DB.
+    @Procedure(procedureName = "insertarPersona")
+    void insertarPersona(String p_name, String p_last_name);
 }

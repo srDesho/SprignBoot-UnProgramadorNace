@@ -50,6 +50,9 @@ public class SpringStoredProceduresJpaApplication implements CommandLineRunner {
 		Person person = personRepository.buscarPersona(2L);
 		log.info("\n");
 		log.info(person.toString());
+
+		// SP insertarPersona
+		personRepository.insertarPersona("Cristian", "Montaño Laime");
 	}
 
 
