@@ -104,6 +104,8 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     Person buscarPersona(Long idPerson);
 
     // Trabajamos con los siguientes procedimientos almacenados de nuestra DB.
+
+    // SP insertarPersona
     // @Procedure(procedureName = "insertarPersona")
     // void insertarPersona(String p_name, String p_last_name);
 
@@ -130,5 +132,16 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     */
     // Ahora hacemos el método que retornará una persona
     @Procedure(procedureName = "insertarPersona")
-    Person insertarPersona(String p_name, String p_last_name);
+    Person insertarPersona(String name, String lastName); // No importa el nombre que le damos a los argumentos
+
+    // SP actualizarPersona
+    // Debemos ver bien nuestro SP:
+    /*
+    BEGIN
+        UPDATE Person SET name = p_name, last_name = p_last_name WHERE id = p_id;
+    END
+    */
+    // El primer argumento debemo poner el id, luego el name y por último de lastName
+    @Procedure
+    void actualizarPersona(Long id, String name, String lastName);
 }
