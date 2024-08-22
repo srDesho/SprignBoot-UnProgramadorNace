@@ -104,6 +104,31 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     Person buscarPersona(Long idPerson);
 
     // Trabajamos con los siguientes procedimientos almacenados de nuestra DB.
+    // @Procedure(procedureName = "insertarPersona")
+    // void insertarPersona(String p_name, String p_last_name);
+
+    // Si queremos capturar a la persona insertada en un objeto, debemos cambiar la lógica de nuestro SP en la DT, ejemplo:
+    // Este es mi SP:
+    /*BEGIN
+        INSERT INTO Person (name, last_name) VALUES (p_name, p_last_name);
+    END*/
+
+    // Lo cambiamos de la siguiente manera:
+    /*
+    BEGIN
+        DECLARE last_insert_id INT;
+
+        -- Inserta la nueva persona
+        INSERT INTO Person (name, last_name) VALUES (p_name, p_last_name);
+
+        -- Obtiene el ID de la persona recién insertada
+        SET last_insert_id = LAST_INSERT_ID();
+
+        -- Retorna la persona recién insertada
+        SELECT * FROM Person WHERE id = last_insert_id;
+    END
+    */
+    // Ahora hacemos el método que retornará una persona
     @Procedure(procedureName = "insertarPersona")
-    void insertarPersona(String p_name, String p_last_name);
+    Person insertarPersona(String p_name, String p_last_name);
 }
