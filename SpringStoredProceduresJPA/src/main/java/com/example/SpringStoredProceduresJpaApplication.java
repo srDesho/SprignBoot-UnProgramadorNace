@@ -46,7 +46,7 @@ public class SpringStoredProceduresJpaApplication implements CommandLineRunner {
 		// log.info("\n");
 		// persons.forEach(person -> log.info(person.toString()));
 
-		// Aquí trabajaremos con el método buscarPersona
+		// Aquí trabajaremos con el SP buscarPersona
 		Person person = personRepository.buscarPersona(2L);
 		log.info("\n");
 		log.info(person.toString());
@@ -56,7 +56,11 @@ public class SpringStoredProceduresJpaApplication implements CommandLineRunner {
         // log.info("\n Persona insertada: {}", personaInsertada.toString());
 
 		// SP actualizarPersona
-		personRepository.actualizarPersona(29l, "Juancín", "Ricaldez");
-		log.info("Registros de persona actualizados.");
+		// personRepository.actualizarPersona(29l, "Juancín", "Ricaldez");
+		// log.info("Registros de persona actualizados.");
+
+		// SP eliminarPersona
+		personRepository.eliminarPersona(26L);
+		log.info("Persona eliminada satisfactoriamente.");
 	}
 }

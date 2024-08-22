@@ -144,4 +144,8 @@ public interface PersonRepository extends CrudRepository<Person, Long> {
     // El primer argumento debemo poner el id, luego el name y por último de lastName
     @Procedure
     void actualizarPersona(Long id, String name, String lastName);
+
+    // SP eliminarPersona
+    @Procedure
+    void eliminarPersona(Long id);
 }
