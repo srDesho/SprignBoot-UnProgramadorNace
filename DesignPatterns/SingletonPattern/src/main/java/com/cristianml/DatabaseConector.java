@@ -22,7 +22,7 @@ public class DatabaseConector {
 
     // Creamos el método estático que devuelva la instancia.
     // Es muy común que este método se llame "getInstance".
-    private static DatabaseConector getInstance() {
+    public static DatabaseConector getInstance() {
         // Debemos tener una condición para validar nuestra instancia.
         if (databaseConector == null) {
             databaseConector = new DatabaseConector(); // Podemos hacer uso del constructo porque es privado solo para la clase.

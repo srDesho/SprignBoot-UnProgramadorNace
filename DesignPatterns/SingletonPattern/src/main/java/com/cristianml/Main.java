@@ -10,5 +10,14 @@ package com.cristianml;
 public class Main {
     public static void main(String[] args) {
 
+        // Hacemos ejemplo creando la instancia de la clase DatabaseConector
+        DatabaseConector databaseConector = DatabaseConector.getInstance();
+        System.out.println( "databaseConector" + databaseConector);
+        
+        // Creamos otro objeto con distinto nombre para ver que hace la misma referencia al objeto DatabaseConector
+        // porque está definido con patrón singleton y este solo permite una sola instancia.
+        DatabaseConector databaseConector2 = DatabaseConector.getInstance();
+        System.out.println("databaseConector2 = " + databaseConector2);
+
     }
 }
