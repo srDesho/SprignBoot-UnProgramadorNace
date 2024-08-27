@@ -22,7 +22,13 @@ public class DatabaseConector {
 
     // Creamos el método estático que devuelva la instancia.
     // Es muy común que este método se llame "getInstance".
-    public static DatabaseConector getInstance() {
+
+    // En el caso de que trabajemos con aplicaciones multihilos debemos agregar la palabra reservada synchronized,
+    // porque si no hacemos uso de esta palabra, puede que distintos hilos instancien la clase al mismo tiempo
+    // y se creen diferentes instancias, pues la idea es trabajar con una sola instancia en toda la aplicación.
+    // Con esta palabra le decimos a java que un hilo a la vez puede invocar este método y así se tendrá la misma
+    // instancia para todos nuestros hilos.
+    public static synchronized DatabaseConector getInstance() {
         // Debemos tener una condición para validar nuestra instancia.
         if (databaseConector == null) {
             databaseConector = new DatabaseConector(); // Podemos hacer uso del constructo porque es privado solo para la clase.
