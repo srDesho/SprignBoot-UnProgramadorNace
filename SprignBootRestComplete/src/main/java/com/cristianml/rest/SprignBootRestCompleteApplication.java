@@ -1,4 +1,4 @@
-package com.cristianml.SprignBootRestComplete;
+package com.cristianml.rest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

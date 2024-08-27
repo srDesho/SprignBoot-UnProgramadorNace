@@ -1,4 +1,4 @@
-package com.cristianml.SprignBootRestComplete;
+package com.cristianml.rest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
