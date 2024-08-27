@@ -19,5 +19,16 @@ public class Main {
         DatabaseConector databaseConector2 = DatabaseConector.getInstance();
         System.out.println("databaseConector2 = " + databaseConector2);
 
+        // Estas 2 variables como tienen de instancia el mismo objeto, pueden hacer uso de los mismos métodos
+        // que tiene definido en la clase.
+        System.out.println("\n");
+        databaseConector.connectDatabase();
+
+        databaseConector2.connectDatabase();
+
+        // El framework spring trabaja con este patrón en su interior, cuando nosotros creamos un bean al programar
+        // en spring, este lo maneja como un singleton, o sea que solo se instancia una sola vez y es por eso que
+        // siempre nos provee de ese mismo objeto en toda la aplicación que estamos trabajando, así como también
+        // trabaja con el Patrón Prototype, son los 2 patrones predilectos con los cuales trabaja spring boot.
     }
 }

@@ -36,4 +36,16 @@ public class DatabaseConector {
         return databaseConector;
     }
 
-}
+    // Aquí creamos las funcionalidades de nuestros objetos.
+    // Ya que nuestro objeto se trata de un conector a la DB hacemos los métodos siguientes:
+
+    public void connectDatabase() {
+        System.out.println("Connecting database = " + databaseConector);
+    }
+
+
+    public void disconnectDatabase() {
+        System.out.println("Disconnecting database = " + databaseConector);
+    }
+
+ }
