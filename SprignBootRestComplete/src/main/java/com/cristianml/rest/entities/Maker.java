@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "fabricante")
+@Table(name = "fabricantes")
 public class Maker {
 
     @Id
@@ -23,4 +23,14 @@ public class Maker {
     @Column(name = "nombre")
     private String name;
 
+    // Para hacer la relación de 1 a muchos, siempre debemos ubicarnos en la que tiene el 1
+    // como en este caso 1 Fabricante puede crear muchos Productos.
+    // mappedBy: mapeamos la otra entidad, debemos poner el nombre del atributo Maker de la clase Product
+    // CascadeType.ALL: Para que haga un movimiento en cascada en la clase Maker y la otra que está asociada.
+    // FetchType.LAZY: Para no sobrecargar la memoria, sirve para que cuando hagamos uso de la entidad, no nos devuelva
+    // todo lo que contiene en la lista también, solo lo hará cuando llamemos a la lista.
+    // orphanRemoval: Si eliminamos un creador(Maker) automáticamente nos eliminará todos los productos de ese creador
+    // ya que un producto no puede existir sino existe un creador.
+    @OneToMany(mappedBy = "maker", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<Product> productList = new ArrayList<>();
 }
