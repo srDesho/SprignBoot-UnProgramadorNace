@@ -4,10 +4,12 @@ import com.cristianml.rest.entities.Maker;
 import com.cristianml.rest.persistence.IMakerDAO;
 import com.cristianml.rest.repository.MakerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class MakerDAOImpl implements IMakerDAO {
 
     // Implementamos nuestro repositorio Maker

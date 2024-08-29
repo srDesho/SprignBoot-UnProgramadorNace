@@ -1,5 +1,6 @@
 package com.cristianml.rest.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +32,9 @@ public class Product {
     // Le damos el nombre de la clave foránea que se creará en la DB.
     // Con nullable = false, decimos que siempre debe estar esta relación.
     @JoinColumn(name = "id_fabricante", nullable = false)
+    // Esto para que al hacer las peticiones se ignore la lista y no haya problemas con la serialización, ya que
+    // estamos usando el FetchType.LAZY
+    @JsonIgnore
     private Maker maker; // El nombre tiene que ser el mismo que con el que mapeamos en la entidad Maker
 
 }

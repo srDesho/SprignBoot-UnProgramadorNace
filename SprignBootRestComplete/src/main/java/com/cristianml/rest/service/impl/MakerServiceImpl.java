@@ -1,6 +1,7 @@
 package com.cristianml.rest.service.impl;
 
 import com.cristianml.rest.entities.Maker;
+import com.cristianml.rest.persistence.impl.MakerDAOImpl;
 import com.cristianml.rest.service.IMakerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -13,30 +14,30 @@ import java.util.Optional;
 @Primary
 public class MakerServiceImpl implements IMakerService {
 
-    private final IMakerService makerService;
+    private final MakerDAOImpl makerDAO;
 
     @Autowired
-    public MakerServiceImpl(IMakerService makerService) {
-        this.makerService = makerService;
+    public MakerServiceImpl(MakerDAOImpl makerDAO) {
+        this.makerDAO = makerDAO;
     }
 
     @Override
     public void save(Maker maker) {
-        this.makerService.save(maker);
+        this.makerDAO.save(maker);
     }
 
     @Override
     public Optional<Maker> findById(Long id) {
-        return this.makerService.findById(id);
+        return this.makerDAO.findById(id);
     }
 
     @Override
     public List<Maker> findAll() {
-        return this.makerService.findAll();
+        return this.makerDAO.findAll();
     }
 
     @Override
     public void deleteById(Long id) {
-        this.makerService.deleteById(id);
+        this.makerDAO.deleteById(id);
     }
 }

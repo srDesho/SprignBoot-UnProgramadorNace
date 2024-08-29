@@ -5,11 +5,13 @@ import com.cristianml.rest.entities.Product;
 import com.cristianml.rest.persistence.IProductDAO;
 import com.cristianml.rest.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class ProductDAOImpl implements IProductDAO {
 
     // Implementamos nuestro repositorio
