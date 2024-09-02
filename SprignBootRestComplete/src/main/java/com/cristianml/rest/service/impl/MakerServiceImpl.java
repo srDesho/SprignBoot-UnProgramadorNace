@@ -1,6 +1,7 @@
 package com.cristianml.rest.service.impl;
 
 import com.cristianml.rest.entities.Maker;
+import com.cristianml.rest.persistence.IMakerDAO;
 import com.cristianml.rest.persistence.impl.MakerDAOImpl;
 import com.cristianml.rest.service.IMakerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,10 @@ import java.util.Optional;
 @Primary
 public class MakerServiceImpl implements IMakerService {
 
-    private final MakerDAOImpl makerDAO;
+    private final IMakerDAO makerDAO;
 
     @Autowired
-    public MakerServiceImpl(MakerDAOImpl makerDAO) {
+    public MakerServiceImpl(IMakerDAO makerDAO) {
         this.makerDAO = makerDAO;
     }
 

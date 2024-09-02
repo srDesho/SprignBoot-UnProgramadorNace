@@ -1,10 +1,7 @@
 package com.cristianml.rest.controllers.dto;
 
 import com.cristianml.rest.entities.Product;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;

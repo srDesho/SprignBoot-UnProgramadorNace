@@ -37,4 +37,5 @@ public class Maker {
     // estamos usando el FetchType.LAZY
     @JsonIgnore
     private List<Product> productList = new ArrayList<>();
+
 }

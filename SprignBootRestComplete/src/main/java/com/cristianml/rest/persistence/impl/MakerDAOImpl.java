@@ -27,11 +27,7 @@ public class MakerDAOImpl implements IMakerDAO {
 
     @Override
     public Optional<Maker> findById(Long id) {
-        Optional<Maker> optional = this.makerRepository.findById(id);
-        if(optional.isEmpty()) {
-            return Optional.empty();
-        }
-        return optional;
+        return this.makerRepository.findById(id);
     }
 
     @Override
