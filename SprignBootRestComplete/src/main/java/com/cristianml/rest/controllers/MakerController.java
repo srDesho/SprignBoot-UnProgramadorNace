@@ -4,8 +4,10 @@ import com.cristianml.rest.controllers.dto.MakerDTO;
 import com.cristianml.rest.entities.Maker;
 import com.cristianml.rest.mapper.MakerMapper;
 import com.cristianml.rest.service.IMakerService;
+import com.cristianml.rest.utilities.Utilities;
 import com.cristianml.rest.service.impl.MakerServiceImpl;
 import org.hibernate.Hibernate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,5 +55,20 @@ public class MakerController {
                 .toList();
 
         return ResponseEntity.ok(makerDTOList);
+    }
+
+    // Agregar nuevo maker
+    @PostMapping("/add")
+    public ResponseEntity<Object>saveMaker(@RequestBody MakerDTO request) {
+        if (request.getName().isBlank()) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "El nombre no debe estar vacío.");
+        }
+
+        // Convertimos el DTO a una Entidad porque el método .save en nuestro servicio y persistencia trabaja con entidades
+        Maker maker = MakerMapper.INSTANCE.makerDTOToMakerEntity(request);
+        // Guardamos en la db
+        this.makerService.save(maker);
+
+        return Utilities.generateResponse(HttpStatus.CREATED, "Creado exitosamente.");
     }
 }
