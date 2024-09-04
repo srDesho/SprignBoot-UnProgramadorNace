@@ -71,4 +71,26 @@ public class MakerController {
 
         return Utilities.generateResponse(HttpStatus.CREATED, "Creado exitosamente.");
     }
+
+    // Editar un maker
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateMaker(@RequestBody MakerDTO request, @PathVariable("id") Long id) {
+        // Verificamos si el registro existe
+        Optional<Maker> makerOptional = this.makerService.findById(id);
+        if (makerOptional.isEmpty()) {
+            return Utilities.generateResponse(HttpStatus.NOT_FOUND, "El maker con ese Id no existe en la DB");
+        }
+
+        // Verificamos que los datos no estén vacíos
+        if (request.getName().isBlank()) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "El campo nombre, no puede estar vacío.");
+        }
+
+        // Obtenemos el MakerDTO y convertimos a una entidad
+        Maker maker = makerOptional.get();
+        maker.setName(request.getName());
+        this.makerService.save(maker);
+
+        return Utilities.generateResponse(HttpStatus.OK, "Actualizado exitosamente.");
+    }
 }
