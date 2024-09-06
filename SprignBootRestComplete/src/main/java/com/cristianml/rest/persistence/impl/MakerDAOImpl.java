@@ -37,6 +37,6 @@ public class MakerDAOImpl implements IMakerDAO {
 
     @Override
     public void deleteById(Long id) {
-
+        this.makerRepository.deleteById(id);
     }
 }

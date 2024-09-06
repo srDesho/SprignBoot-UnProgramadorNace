@@ -50,4 +50,14 @@ public class ProductDAOImpl implements IProductDAO {
     public List<Product> findByPriceInRange(BigDecimal minPrice, BigDecimal maxPrice) {
         return this.productRepository.findProductsByPriceInRange(minPrice, maxPrice);
     }
+
+    public boolean existsByMaker(Long idMaker) {
+        Maker maker = new Maker();
+        maker.setId(idMaker);
+        if (productRepository.existsByMaker(maker)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

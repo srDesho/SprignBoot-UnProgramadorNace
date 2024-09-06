@@ -1,5 +1,6 @@
 package com.cristianml.rest.service.impl;
 
+import com.cristianml.rest.entities.Maker;
 import com.cristianml.rest.entities.Product;
 import com.cristianml.rest.persistence.IProductDAO;
 import com.cristianml.rest.persistence.impl.ProductDAOImpl;
@@ -46,5 +47,18 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<Product> findByPriceInRange(BigDecimal minPrice, BigDecimal maxPrice) {
         return this.productDAO.findByPriceInRange(minPrice, maxPrice);
+    }
+
+    // Método para verificar si existen productos relacionado con un maker
+    public boolean existsByMaker(Long idMaker) {
+        // Creamos un nuevo maker para que funcione correctamente la búsque sólo con el id dado
+        Maker maker = new Maker();
+        maker.setId(idMaker);
+
+        if (this.productDAO.existsByMaker(idMaker)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

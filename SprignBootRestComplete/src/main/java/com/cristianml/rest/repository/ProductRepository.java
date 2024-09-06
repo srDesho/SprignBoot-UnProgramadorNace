@@ -1,5 +1,6 @@
 package com.cristianml.rest.repository;
 
+import com.cristianml.rest.entities.Maker;
 import com.cristianml.rest.entities.Product;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -20,4 +21,8 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
     // Con los signos indicamos los valores definidos entre los paréntesis.
     @Query("SELECT p FROM Product p WHERE p.price >= ?1 AND p.price <= ?2")
     List<Product> findProductsByPriceInRange(BigDecimal minPrice, BigDecimal maxPrice);
+
+    // Método para verificar si un maker tiene relación con alguno de los productos
+    boolean existsByMaker(Maker maker);
+
 }
