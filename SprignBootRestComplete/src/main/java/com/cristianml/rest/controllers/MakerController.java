@@ -4,6 +4,7 @@ import com.cristianml.rest.controllers.dto.MakerDTO;
 import com.cristianml.rest.entities.Maker;
 import com.cristianml.rest.mapper.MakerMapper;
 import com.cristianml.rest.service.IMakerService;
+import com.cristianml.rest.service.impl.ProductServiceImpl;
 import com.cristianml.rest.utilities.Utilities;
 import com.cristianml.rest.service.impl.MakerServiceImpl;
 import org.hibernate.Hibernate;
@@ -19,13 +20,15 @@ import java.util.Optional;
 public class MakerController {
 
     private final IMakerService makerService;
+    private final ProductServiceImpl productService;
 
-    public MakerController(IMakerService makerService) {
+    public MakerController(IMakerService makerService, ProductServiceImpl productService) {
         this.makerService = makerService;
+        this.productService = productService;
     }
 
     // Creamos nuestro endpoint para encontrar un maker
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable("id") Long id) {
         Optional<Maker> optionalMaker = this.makerService.findById(id);
         if (optionalMaker.isPresent()) {
@@ -44,7 +47,7 @@ public class MakerController {
     }
 
     // EndPoint para obtener lista de makers
-    @GetMapping("/findAll")
+    @GetMapping("")
     public ResponseEntity<?> findAll() {
         List<MakerDTO> makerDTOList = makerService.findAll()
                 // Convertimos a DTO con .stream
@@ -58,7 +61,7 @@ public class MakerController {
     }
 
     // Agregar nuevo maker
-    @PostMapping("/add")
+    @PostMapping("")
     public ResponseEntity<Object>saveMaker(@RequestBody MakerDTO request) {
         if (request.getName().isBlank()) {
             return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "El nombre no debe estar vacío.");
@@ -92,5 +95,29 @@ public class MakerController {
         this.makerService.save(maker);
 
         return Utilities.generateResponse(HttpStatus.OK, "Actualizado exitosamente.");
+    }
+
+    // Eliminar un Maker
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteMaker(@PathVariable("id") Long id) {
+        // Verificamos si existe en la db
+        Optional<Maker> makerOptional = makerService.findById(id);
+        if (makerOptional.isEmpty()) {
+            return Utilities.generateResponse(HttpStatus.NOT_FOUND, "No existe registro con ese ID en la base de datos.");
+        }
+
+        // Verificamos que no tenga productos asociados
+        if (productService.existsByMaker(id)) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST,
+                    "No se puede eliminar el registro debido a que la categoría tiene relación con la tabla productos");
+        }
+
+        // Envolvemos en un try catch para desviar si tenemos algún inconveniente.
+        try {
+            this.makerService.deleteById(id);
+            return Utilities.generateResponse(HttpStatus.OK, "Registro eliminado exitosamente.");
+        } catch (Exception e) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "Falló la ejecución, por favor inténtelo más tarde.");
+        }
     }
 }
