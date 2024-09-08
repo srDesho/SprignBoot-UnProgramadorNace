@@ -52,7 +52,6 @@ public class MakerController {
         List<MakerDTO> makerDTOList = makerService.findAll()
                 // Convertimos a DTO con .stream
                 .stream()
-                // Debemos tener creado el .builder en nuestro modelo, en este caso lo creamos con lombok @Builder.
                 // Transformamos los elementos de la lista con map para devolver una nueva lista con los elementos modificados.
                 .map(MakerMapper.INSTANCE::makerToMakerDTO)
                 .toList();
