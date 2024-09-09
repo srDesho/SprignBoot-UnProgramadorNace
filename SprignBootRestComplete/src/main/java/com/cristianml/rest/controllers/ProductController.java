@@ -4,7 +4,9 @@ import com.cristianml.rest.controllers.dto.ProductDTO;
 import com.cristianml.rest.entities.Product;
 import com.cristianml.rest.mapper.ProductMapper;
 import com.cristianml.rest.service.IProductService;
+import com.cristianml.rest.utilities.Utilities;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,4 +49,17 @@ public class ProductController {
         return ResponseEntity.ok(productDTOList);
     }
 
+    // Add product
+    @PostMapping("/product")
+    public ResponseEntity<Object> saveProduct(@RequestBody ProductDTO request) {
+        // Verificamos que los datos no vengan vacíos o nulos
+        if (request.getName().isBlank() || request.getPrice() == null || request.getMaker() == null) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "No se pudo crear el registro, inténtelo nuevamente.");
+        }
+        
+        // Convertimos el DTO a Entidad
+        Product product = ProductMapper.INSTANCE.productDTOToProduct(request);
+        this.productService.save(product);
+        return Utilities.generateResponse(HttpStatus.CREATED, "Producto creado exitosamente.");
+    }
 }

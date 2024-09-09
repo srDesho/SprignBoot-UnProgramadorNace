@@ -20,5 +20,5 @@ public class ProductDTO {
         // BigDecimal es específicamente para trabajar con decimales, pero para monedas porque es de alta precisión.
         private BigDecimal price;
         private Maker maker; // El nombre tiene que ser el mismo que con el que mapeamos en la entidad Maker
-    
+
 }
