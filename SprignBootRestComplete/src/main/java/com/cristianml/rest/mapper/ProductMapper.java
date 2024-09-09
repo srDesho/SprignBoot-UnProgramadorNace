@@ -15,5 +15,6 @@ public interface ProductMapper {
     // El nombre lo creamos con la siguiente nomenclatura o sea primero el nombre del objeto que se obtienen los datos,
     // seguido del To y luego el nombre del objeto que queremos convertir (o sea el objeto que se le seteará los datos).
     ProductDTO productToProductDTO(Product product);
+    Product productDTOToProduct(ProductDTO productDTO);
 
 }
