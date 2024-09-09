@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,6 +34,17 @@ public class ProductController {
             return ResponseEntity.ok(product);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    // findAll
+    @GetMapping("/product")
+    public ResponseEntity<?> findAll() {
+        // Creamos la lista y obtenemos los registros de la db
+        List<ProductDTO> productDTOList = productService.findAll().stream()
+                .map(ProductMapper.INSTANCE::productToProductDTO)
+                .toList();
+
+        return ResponseEntity.ok(productDTOList);
     }
 
 }
