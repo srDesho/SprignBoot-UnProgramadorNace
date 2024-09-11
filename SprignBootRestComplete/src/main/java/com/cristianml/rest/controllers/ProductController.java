@@ -87,4 +87,22 @@ public class ProductController {
             return Utilities.generateResponse(HttpStatus.NOT_FOUND, "El producto con ese id no existe en la db.");
         }
     }
+
+    // Eliminar un producto
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable("id") Long id) {
+        // Verificamos si el registro existe en la db
+        Optional<Product> optionalProduct = this.productService.findById(id);
+        if (optionalProduct.isEmpty()) {
+            return Utilities.generateResponse(HttpStatus.NOT_FOUND, "No existe registro con ese ID en la base de datos.");
+        }
+
+        // Envolvemos en un try catch por si existe un error, haga otra acción y no se pare la ejecución abruptamente.
+        try {
+            this.productService.deleteById(id);
+            return Utilities.generateResponse(HttpStatus.OK, "Eliminado exitosamente:");
+        } catch (Exception e) {
+            return Utilities.generateResponse(HttpStatus.BAD_REQUEST, "Falló la ejecución, inténtelo más tarde.");
+        }
+    }
 }
