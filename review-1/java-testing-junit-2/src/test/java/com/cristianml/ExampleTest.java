@@ -5,18 +5,22 @@ import org.junit.jupiter.api.Test;
 
 public class ExampleTest {
 
+    // 1. Método para sumar dos números
     @Test
     public void sumarTest() {
-
+        // Given
         Example example = new Example();
+        int numberA = 8;
+        int numberB = 8;
 
-        int result = example.sumar(8, 5);
+        // When
+        int result = example.sumar(numberA, numberB);
 
-        assertEquals(13, result);
-        assertTrue(12 < result);
-        assertFalse(12 > result);
+        // Then
         assertNotNull(result);
+        assertEquals(16, result);
         assertInstanceOf(Integer.class, result);
     }
+
 
 }
