@@ -30,7 +30,7 @@ import java.util.List;
 @EnableMethodSecurity // Con esta hacemos configuraciones con anotaciones.
 public class SecurityConfig {
 
-     // Lo segundo es configurar el SecurityFilterChain como un Bean
+    /* // Lo segundo es configurar el SecurityFilterChain como un Bean
     @Bean
     // El HttpSecurity es el que nos permite pasar todos los filtros y gracias a él podemos personalizar nuestra config.
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -67,6 +67,17 @@ public class SecurityConfig {
                     // Ponemos authenticated() si queremos que ingresen sólo los autenticados.
                     // http.anyRequest().authenticated();
                 })
+                .build();
+    }*/
+
+    // Trabajaremos con anotaciones en el controlador y la configuración simplemente debe ir de la siguiente manera:
+    @Bean
+    // El HttpSecurity es el que nos permite pasar todos los filtros y gracias a él podemos personalizar nuestra config.
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+                .csrf(csrf -> csrf.disable())
+                // Configuramos para que haga una autenticación básica(o sea sin token u otra) y que sea por defecto.
+                .httpBasic(Customizer.withDefaults())
                 .build();
     }
 
