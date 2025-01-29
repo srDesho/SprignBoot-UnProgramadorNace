@@ -1,15 +1,28 @@
 package com.cristianml;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ExampleTest {
+
+    // Creamos una variable global de nuestro objeto que tiene los métodos que estamos testeando.
+   private Example example;
+
+    // Hacemos la variable global se instancie para cada método con la anotación @BeforeEach
+    @BeforeEach
+    public void init() {
+        this.example = new Example();
+    }
 
     // 1. Método para sumar dos números
     @Test
     public void testSumar() {
         // Given
-        Example example = new Example();
         int numberA = 8;
         int numberB = 8;
 
@@ -26,7 +39,6 @@ public class ExampleTest {
     @Test
     public void testCheckPositivo() {
         // Given
-        Example example = new Example();
         int num = 2;
         
         // When
@@ -38,9 +50,7 @@ public class ExampleTest {
 
     @Test
     public void testCheckPositivoError() {
-
         // Given
-        Example example = new Example();
         int num = -2;
 
         // Then
@@ -49,6 +59,22 @@ public class ExampleTest {
             example.checkPositivo(num);
         });
     }
+
+    // 3. Método para contar el número de letras 'a' en una cadena
+    @Test
+    public void testContarLetrasA() {
+        // Given
+        String cadena = "holaATodas";
+
+        // When
+        int result = example.contarLetrasA(cadena);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(2, result);
+    }
+
+   
 
     // Given
 
