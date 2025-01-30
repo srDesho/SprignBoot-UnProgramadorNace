@@ -28,6 +28,6 @@ public class RoleEntity {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "role_permissions", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
     // Usamos un Set en lugar de una List para evitar duplicados, ya que un usuario no debe tener roles repetidos.
-    private Set<PersmissionEntity> permissionList  = new HashSet<>();
+    private Set<PermissionEntity> permissionList  = new HashSet<>();
 
 }
