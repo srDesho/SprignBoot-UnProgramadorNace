@@ -74,7 +74,23 @@ public class ExampleTest {
         assertEquals(2, result);
     }
 
-   
+    // 4. Método que retorna un valor booleano si la lista contiene el elemento
+    @Test
+    public void testContieneElemento() {
+        // Given
+        List<String> herramientas = List.of(new String[]{"martillo", "alicate", "destornillador"});
+        String elementoA = "pala";
+        String elementoB = "martillo";
+
+        // When
+        boolean resultA = example.contieneElemento(herramientas, elementoA);
+        boolean resultB = example.contieneElemento(herramientas, elementoB);
+
+        // Then
+        assertFalse(resultA);
+        assertTrue(resultB);
+
+    }
 
     // Given
 
