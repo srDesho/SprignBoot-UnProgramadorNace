@@ -92,6 +92,47 @@ public class ExampleTest {
 
     }
 
+    // 5. Método para revertir una cadena
+    @Test
+    public void testRevertirCadena() {
+        // Given
+        String cadena = "hola";
+
+        // When
+        String result = example.revertirCadena(cadena);
+
+        // Then
+        assertEquals("aloh", result);
+    }
+
+    // 6. Método que calcula el factorial de un número
+    @Test
+    public void testFactorial() {
+        // Given
+        int nro = 4;
+        int nroError = -10;
+
+        // When
+        long result = example.factorial(nro);
+
+        // Then
+        assertEquals(24, result);
+        assertThrows(IllegalArgumentException.class, () -> {
+            example.factorial(nroError);
+        });
+    }
+
+    @Test
+    public void testFactorialError() {
+        // Given
+        int nro = -50;
+
+        // Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            example.factorial(nro);
+        });
+    }
+
     // Given
 
 
