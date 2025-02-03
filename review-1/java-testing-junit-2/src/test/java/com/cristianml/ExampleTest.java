@@ -133,6 +133,55 @@ public class ExampleTest {
         });
     }
 
+    // 7. Método para verificar si un número es primo
+    @Test
+    public void testEsPrimo() {
+        // Given
+        int nro = 7;
+
+        // When
+        boolean result = example.esPrimo(nro);
+
+        // Then
+        assertTrue(result);
+    }
+
+    @Test
+    public void testEsPrimoMenorOIgualQueUno() {
+        // Given
+        int nro = 1;
+
+        // When
+        boolean result = example.esPrimo(nro);
+
+        // Then
+        assertFalse(result);
+    }
+
+    @Test
+    public void testEsPrimoMayorACuatro() {
+        // Given
+        int nro = 9;
+
+        // When
+        boolean result = example.esPrimo(nro);
+
+        // Then
+        assertFalse(result);
+    }
+
+    // 8. Método que simula un retraso y retorna un mensaje
+
+
+    // 9. Método para convertir una lista de enteros a lista de strings
+
+
+    // 10. Método que calcula la media de una lista de enteros
+
+
+    // 11. Método para convertir una lista de enteros a lista de strings
+
+
     // Given
 
 
@@ -140,6 +189,5 @@ public class ExampleTest {
 
 
     // Then
-
 
 }
