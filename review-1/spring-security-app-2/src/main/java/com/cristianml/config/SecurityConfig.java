@@ -1,5 +1,6 @@
 package com.cristianml.config;
 
+import com.cristianml.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -89,19 +90,19 @@ public class SecurityConfig {
 
     // Lo cuarto es crear nuestro authentication provider(proveedor de autenticación)
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider(UserDetailsServiceImpl userDetailsService) {
         // En este caso como trabajamos con credenciales de una base de datos pues haremos uso de DaoAuthenticatioProvider.
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         // Seteamos las credenciales
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService());
+        provider.setUserDetailsService(userDetailsService);
         return provider;
     }
 
     // Vamos a crear nuestros usuarios en memoria(luego lo hacemos con la db real).
     // Spring security sólo reconoce a los usuarios con el objeto UserDetails, o sea que cuando obtendremos registros
     // de la db pues debemos convertir al usuario normal en un userDetails.
-    @Bean
+    /*@Bean
     public UserDetailsService userDetailsService() {
         List<UserDetails> userDetailsList = new ArrayList<>();
         userDetailsList.add(User.withUsername("desho")
@@ -115,7 +116,7 @@ public class SecurityConfig {
                 .authorities("READ")
                 .build());
         return new InMemoryUserDetailsManager(userDetailsList);
-    }
+    }*/
 
     // Creamos nuestro passwordEncoder
     @Bean
