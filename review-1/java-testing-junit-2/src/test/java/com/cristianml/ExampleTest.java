@@ -171,23 +171,78 @@ public class ExampleTest {
     }
 
     // 8. Método que simula un retraso y retorna un mensaje
+    @Test
+    public void testMensajeConRetraso() throws InterruptedException {
+        // When
+        String result = example.mensajeConRetraso();
 
+        // Then
+        assertEquals("Listo después de retraso", result);
+    }
 
     // 9. Método para convertir una lista de enteros a lista de strings
+    @Test
+    public void testConvertirAString() {
+        // Given
+        List<Integer> nros = List.of(1, 2, 3, 4, 5, 6);
 
+        // When
+        List<String> resultList = example.convertirAString(nros);
+
+        // Then
+        assertEquals(List.of("1", "2", "3", "4", "5", "6"), resultList);
+
+    }
 
     // 10. Método que calcula la media de una lista de enteros
+    @Test
+    public void testCalcularMedia() {
+        // Given
+        List<Integer> nros = List.of(9, 7, 5);
 
+        // When
+        double result = example.calcularMedia(nros);
+
+        // Then
+        assertEquals(7, result);
+    }
+
+    @Test
+    public void testCalcularMediaNull() {
+        // Given
+        List<Integer> listaNula = null;
+
+        // When Then
+        assertThrows(IllegalArgumentException.class, () -> {
+            double resultNulo = example.calcularMedia(listaNula);
+        });
+
+    }
+
+    @Test
+    public void testCalcularMediaEmpty() {
+        // Given
+        List<Integer> listaVacia = new ArrayList<>();
+
+        // When Then
+        assertThrows(IllegalArgumentException.class, () -> {
+
+            double resultVacío = example.calcularMedia(listaVacia);
+        });
+
+    }
 
     // 11. Método para convertir una lista de enteros a lista de strings
+    @Test
+    public void testConvertirListaAString() {
+        // Given
+        List<String> nros = List.of("1", "2", "3", "4");
 
+        // When
+        String result = example.convertirListaAString(nros);
 
-    // Given
-
-
-    // When
-
-
-    // Then
+        // Then
+        assertEquals("1,2,3,4", result);
+    }
 
 }
