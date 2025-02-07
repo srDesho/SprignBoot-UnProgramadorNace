@@ -1,9 +1,7 @@
 package com.cristianml.controller;
 
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -11,22 +9,30 @@ import org.springframework.web.bind.annotation.RestController;
 @PreAuthorize("denyAll()") // Con PreAuthorize() indicamos que debe haber una autenticación o no.
 public class TestAuthController {
 
-    @GetMapping("/hello")
-    @PreAuthorize("permitAll()")
-    public String hello() {
-        return "Hello world";
+    @GetMapping("/get")
+    @PreAuthorize("hasAuthority('CREATE') OR hasAuthority('DELETE')")
+    public String helloGet() {
+        return "Hello world - GET";
     }
 
-    @GetMapping("/hello-secured")
-    @PreAuthorize("hasAuthority('READ')")
-    public String helloSecured() {
-        return "Hello world Secured";
+    @PostMapping("/post")
+    public String helloPost() {
+        return "Hello world - POST";
     }
 
-    @GetMapping("/hello-secured2")
-    @PreAuthorize("hasAuthority('CREATE')")
-    public String helloSecured2() {
-        return "Hello world Secured 2";
+    @PutMapping("/put")
+    public String helloPut() {
+        return "Hello world - PUT";
     }
 
+    @DeleteMapping("/delete")
+    public String helloDelete() {
+        return "Hello world - DELETE";
+    }
+
+    @PatchMapping("/patch")
+    @PreAuthorize("hasAuthority('REFACTOR')")
+    public String helloPatch() {
+        return "Hello world - PATCH";
+    }
 }
