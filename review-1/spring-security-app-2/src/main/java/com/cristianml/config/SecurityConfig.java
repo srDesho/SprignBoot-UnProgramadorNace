@@ -16,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -31,7 +32,7 @@ import java.util.List;
 @EnableMethodSecurity // Con esta hacemos configuraciones con anotaciones.
 public class SecurityConfig {
 
-    /* // Lo segundo es configurar el SecurityFilterChain como un Bean
+     // Lo segundo es configurar el SecurityFilterChain como un Bean
     @Bean
     // El HttpSecurity es el que nos permite pasar todos los filtros y gracias a él podemos personalizar nuestra config.
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -57,21 +58,24 @@ public class SecurityConfig {
                     // Primero identificamos el tipo de método de solicitud(GET, POST, ETC...)
                     // Lo segundo es poner las rutas de los endpoints.
                     // permitAll() es para permitir el acceso a usuarios sin que estén logeados
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello").permitAll();
+                    http.requestMatchers(HttpMethod.GET, "/auth/get").permitAll();
                     // Configuramos endpoints privados
                     // .hasAuthority() es para definir qué usuarios pueden acceder depende de la autorización(permiso) que tienen.
-                    http.requestMatchers(HttpMethod.GET, "/auth/hello-secured").hasAuthority("CREATE");
+                    http.requestMatchers(HttpMethod.POST, "/auth/post").hasAnyAuthority("CREATE", "READ");
+                    http.requestMatchers(HttpMethod.PATCH, "/auth/patch").hasAnyRole("DEVELOPER");
 
-                    // Configuramos resto del endpoints - NO ESPECIFICADOS
-                    // Al final ponemos denyAll() si queremos que nadie ingrese a este endpoint
+                    // Configura seguridad para peticiones no especificadas.
+
+                    // Bloquea todo acceso a endpoints no definidos explícitamente (lista blanca).
                     http.anyRequest().denyAll();
-                    // Ponemos authenticated() si queremos que ingresen sólo los autenticados.
+
+                    // Requiere autenticación para endpoints no definidos explícitamente (lista negra).
                     // http.anyRequest().authenticated();
                 })
                 .build();
-    }*/
+    }
 
-    // Trabajaremos con anotaciones en el controlador y la configuración simplemente debe ir de la siguiente manera:
+    /*// Trabajaremos con anotaciones en el controlador y la configuración simplemente debe ir de la siguiente manera:
     @Bean
     // El HttpSecurity es el que nos permite pasar todos los filtros y gracias a él podemos personalizar nuestra config.
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -80,7 +84,7 @@ public class SecurityConfig {
                 // Configuramos para que haga una autenticación básica(o sea sin token u otra) y que sea por defecto.
                 .httpBasic(Customizer.withDefaults())
                 .build();
-    }
+    }*/
 
     // Lo tercero es crear el AuthenticationManager
     @Bean
@@ -121,7 +125,11 @@ public class SecurityConfig {
     // Creamos nuestro passwordEncoder
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new BCryptPasswordEncoder().encode("123456"));
     }
 
 }
