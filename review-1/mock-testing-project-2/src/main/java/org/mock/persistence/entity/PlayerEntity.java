@@ -53,9 +53,9 @@ public class PlayerEntity {
     public String toString() {
         return "PlayerEntity{" +
                 "id=" + id +
-                "name='" + name + '\'' +
-                "team='" + team + '\'' +
-                "position='" + position + '\'' +
+                ", name='" + name + '\'' +
+                ", team='" + team + '\'' +
+                ", position='" + position + '\'' +
                 '}';
     }
 }

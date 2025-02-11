@@ -42,7 +42,7 @@ public class PlayerRepositoryImpl implements IPlayerRepository {
     @Override
     public void deleteById(Long id) {
         System.out.println(" --> Método deleteById real!!");
-        this.playerDatabase.stream()
+        this.playerDatabase = this.playerDatabase.stream()
                 .filter(player -> player.getId() != id)
                 .toList();
     }
