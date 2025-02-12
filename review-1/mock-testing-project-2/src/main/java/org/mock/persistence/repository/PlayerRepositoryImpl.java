@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PlayerRepositoryImpl implements IPlayerRepository {
 
-    List<PlayerEntity> playerDatabase = new ArrayList<>(List.of(
+   /* List<PlayerEntity> playerDatabase = new ArrayList<>(List.of(
             new PlayerEntity(1L, "Lionel Messi", "Inter Miami", "Delantero"),
             new PlayerEntity(2L, "Cristiano Ronaldo", "Al-Nassr", "Delantero"),
             new PlayerEntity(3L, "Kylian Mbappé", "Real Madrid", "Delantero"),
@@ -18,7 +18,9 @@ public class PlayerRepositoryImpl implements IPlayerRepository {
             new PlayerEntity(8L, "Rodri", "Manchester City", "Mediocampista"),
             new PlayerEntity(9L, "Bukayo Saka", "Arsenal", "Delantero"),
             new PlayerEntity(10L, "Phil Foden", "Manchester City", "Mediocampista")
-    ));
+    ));*/
+
+    List<PlayerEntity> playerDatabase = new ArrayList<>();
 
     @Override
     public List<PlayerEntity> findAll() {
