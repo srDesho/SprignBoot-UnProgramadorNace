@@ -128,8 +128,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    /*
+    // De esta manera podemos encriptar nuestras contraseñas.
     public static void main(String[] args) {
         System.out.println(new BCryptPasswordEncoder().encode("123456"));
     }
+    */
 
 }

@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // Los roles de nuestros usuarios debemos agregarlos en la authorityList para decirle a S. Security qué roles y
         // permisos están permitidos y la sesión actual.
 
-        // A los roles debemos spring los reconoce al comienzo de cada nombre como "ROLE_" luego concatenamos lo sgte.
+        // A los roles spring los reconoce al comienzo de cada nombre como "ROLE_" luego concatenamos lo sgte.
         userEntity.getRoles()
                 .forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name()))));
 

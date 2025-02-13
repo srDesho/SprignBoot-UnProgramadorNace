@@ -74,7 +74,7 @@ public class SpringSecurityApp2Application {
 			// Creamos los usuarios
 			UserEntity userCristian = UserEntity.builder()
 					.username("cristian")
-					.password("123456")
+					.password("$2a$10$4eB7Zdc/DSkvZiXyGhzmLuiJFGEMGeVqdm0C/toqimNHREST.0qua")
 					.isEnabled(true)
 					.isAccountNonExpired(true)
 					.isAccountNonLocked(true)
@@ -84,7 +84,7 @@ public class SpringSecurityApp2Application {
 
 			UserEntity userDaniel = UserEntity.builder()
 					.username("daniel")
-					.password("123456")
+					.password("$2a$10$4eB7Zdc/DSkvZiXyGhzmLuiJFGEMGeVqdm0C/toqimNHREST.0qua")
 					.isEnabled(true)
 					.isAccountNonExpired(true)
 					.isAccountNonLocked(true)
@@ -94,7 +94,7 @@ public class SpringSecurityApp2Application {
 
 			UserEntity userAndrea = UserEntity.builder()
 					.username("andrea")
-					.password("123456")
+					.password("$2a$10$4eB7Zdc/DSkvZiXyGhzmLuiJFGEMGeVqdm0C/toqimNHREST.0qua")
 					.isEnabled(true)
 					.isAccountNonExpired(true)
 					.isAccountNonLocked(true)
@@ -104,7 +104,7 @@ public class SpringSecurityApp2Application {
 
 			UserEntity userDesho = UserEntity.builder()
 					.username("desho")
-					.password("123456")
+					.password("$2a$10$4eB7Zdc/DSkvZiXyGhzmLuiJFGEMGeVqdm0C/toqimNHREST.0qua")
 					.isEnabled(true)
 					.isAccountNonExpired(true)
 					.isAccountNonLocked(true)
