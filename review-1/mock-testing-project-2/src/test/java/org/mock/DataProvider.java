@@ -24,4 +24,11 @@ public class DataProvider {
                 );
     }
 
+    public static PlayerEntity playerMock() {
+        return new PlayerEntity(1L, "Lionel Messi", "Inter Miami", "Delantero");
+    }
+
+    public static PlayerEntity newPlayerMock() {
+        return new PlayerEntity(10L, "Iker Casillas", "España", "Arquero");
+    }
 }
