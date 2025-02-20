@@ -20,7 +20,11 @@ public class PlayerRepositoryImpl implements IPlayerRepository {
             new PlayerEntity(10L, "Phil Foden", "Manchester City", "Mediocampista")
     ));*/
 
-    List<PlayerEntity> playerDatabase = new ArrayList<>();
+    private List<PlayerEntity> playerDatabase = new ArrayList<>();
+
+    public void addPlayer(PlayerEntity player) {
+        playerDatabase.add(player);
+    }
 
     @Override
     public List<PlayerEntity> findAll() {
@@ -38,7 +42,9 @@ public class PlayerRepositoryImpl implements IPlayerRepository {
     @Override
     public void save(PlayerEntity playerEntity) {
         System.out.println(" --> Método save real!!");
-        this.playerDatabase.add(playerEntity);
+        if (playerEntity != null) {
+            this.playerDatabase.add(playerEntity);
+        }
     }
 
     @Override
@@ -47,5 +53,9 @@ public class PlayerRepositoryImpl implements IPlayerRepository {
         this.playerDatabase = this.playerDatabase.stream()
                 .filter(player -> player.getId() != id)
                 .toList();
+    }
+
+    public void clearDatabase() {
+        playerDatabase.clear();
     }
 }
