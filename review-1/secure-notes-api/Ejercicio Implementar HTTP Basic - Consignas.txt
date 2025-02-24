@@ -1,0 +1,61 @@
+Ejercicio: Implementar HTTP Basic con Roles y Permisos en Spring Boot
+
+Objetivo
+
+Crear una API REST con Spring Boot y Spring Security que implemente autenticación HTTP Basic con una base de datos real. Se deben gestionar usuarios, roles y permisos para restringir el acceso a diferentes endpoints.
+
+Requisitos
+
+Spring Boot + Spring Security con autenticación HTTP Basic.
+
+Base de datos real (PostgreSQL o MySQL) con usuarios, roles y permisos.
+
+Endpoints protegidos con roles y permisos específicos.
+
+UserDetailsService para cargar usuarios desde la base de datos.
+
+Uso de GrantedAuthority para gestionar roles y permisos.
+
+Restricciones en los endpoints utilizando @PreAuthorize.
+
+Roles y Permisos
+
+Roles disponibles:
+
+ROLE_ADMIN
+
+ROLE_USUARIO
+
+Permisos específicos:
+
+VER_NOTAS → Puede ver las notas.
+
+CREAR_NOTA → Puede crear notas.
+
+EDITAR_NOTA → Puede editar sus propias notas.
+
+ELIMINAR_NOTA → Puede eliminar sus propias notas.
+
+ADMIN_GESTIONAR_USUARIOS → Puede gestionar usuarios (solo admin).
+
+Endpoints y Seguridad
+
+GET /notas → (Requiere VER_NOTAS) → Cualquier usuario con este permiso puede ver todas las notas.
+
+POST /notas → (Requiere CREAR_NOTA) → Solo usuarios con este permiso pueden crear notas.
+
+PUT /notas/{id} → (Requiere EDITAR_NOTA) → Solo el dueño de la nota puede editarla.
+
+DELETE /notas/{id} → (Requiere ELIMINAR_NOTA) → Solo el dueño de la nota puede eliminarla.
+
+GET /admin/usuarios → (Requiere ADMIN_GESTIONAR_USUARIOS) → Solo administradores pueden ver todos los usuarios.
+
+Criterios de evaluación
+
+✔ Uso correcto de UserDetailsService para cargar usuarios desde la base de datos.
+✔ Implementación de autenticación HTTP Basic con Spring Security.
+✔ Configuración de permisos en @PreAuthorize.
+✔ Uso de GrantedAuthority para permisos y roles.
+✔ Seguridad en los endpoints según los permisos asignados.
+
+Cuando lo tengas listo, dime si necesitas ayuda o quieres que revise tu código.

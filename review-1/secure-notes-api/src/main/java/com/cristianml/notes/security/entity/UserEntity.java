@@ -19,21 +19,21 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, updatable = false, nullable = false)
+    @Column(unique = true, nullable = false)
     private String username;
     private String password;
 
     @Column(name = "is_enabled")
-    private String isEnabled;
+    private boolean isEnabled;
 
     @Column(name = "account_non_locked")
-    private String accountNonLocked;
+    private boolean accountNonLocked;
 
     @Column(name = "account_non_expired")
-    private String accountNonExpired;
+    private boolean accountNonExpired;
 
     @Column(name = "credentials_non_expired")
-    private String credentialsNonExpired;
+    private boolean credentialsNonExpired;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_roles"
