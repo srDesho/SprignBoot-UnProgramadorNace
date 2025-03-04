@@ -2,11 +2,10 @@ package com.cristianml.dataProvider;
 
 import com.cristianml.models.MakerModel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class DataProvider {
+public class MakerProvider {
 
     public static List<MakerModel> makerListMock() {
         return List.of(MakerModel.builder().id(1L).name("Samsung").products(null).build(),

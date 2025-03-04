@@ -1,10 +1,8 @@
 package com.cristianml.service.impl;
 
-import com.cristianml.dataProvider.DataProvider;
+import com.cristianml.dataProvider.MakerProvider;
 import com.cristianml.models.MakerModel;
 import com.cristianml.persistence.impl.MakerDAOImpl;
-import com.cristianml.repository.MakerRepository;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -12,10 +10,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class MakerServiceImplTest {
@@ -30,7 +30,7 @@ public class MakerServiceImplTest {
     @Test
     public void testFindAll() {
         // Given
-        List<MakerModel> makerListMock = DataProvider.makerListMock();
+        List<MakerModel> makerListMock = MakerProvider.makerListMock();
 
         // When
         when(this.makerDAO.findAll()).thenReturn(makerListMock);
@@ -48,7 +48,7 @@ public class MakerServiceImplTest {
     @Test
     public void testFindById_MakerExists() {
         // Given
-        Optional<MakerModel> makerModel = DataProvider.makerOptionalMock();
+        Optional<MakerModel> makerModel = MakerProvider.makerOptionalMock();
         Long idToFind = makerModel.get().getId();
 
         // When
@@ -79,7 +79,7 @@ public class MakerServiceImplTest {
     @Test
     public void testSave() {
         // Given
-        MakerModel makerModel = DataProvider.makerOptionalMock().get();
+        MakerModel makerModel = MakerProvider.makerOptionalMock().get();
 
         // When
         this.makerService.save(makerModel);

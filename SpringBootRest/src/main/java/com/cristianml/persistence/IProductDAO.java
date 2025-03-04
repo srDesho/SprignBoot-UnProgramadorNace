@@ -24,5 +24,5 @@ public interface IProductDAO {
     List<ProductModel> findByPriceInRange(BigDecimal minPrice, BigDecimal maxPrice);
 
     // Método para verificar si existen productos relacionado con un maker
-    boolean existsRegisterByMaker(Long makerModel);
+    boolean existsRegisterByMakerModel(MakerModel makerModel);
 }

@@ -42,9 +42,8 @@ public class ProductDAOImpl implements IProductDAO {
     }
 
     @Override
-    public boolean existsRegisterByMaker(Long idMaker) {
-        MakerModel makerModel = new MakerModel();
-        makerModel.setId(idMaker);
+    public boolean existsRegisterByMakerModel(MakerModel makerModel) {
+
         if (productRepository.existsByMaker(makerModel)) {
             return true;
         }

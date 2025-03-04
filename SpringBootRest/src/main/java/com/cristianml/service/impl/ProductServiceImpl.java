@@ -49,7 +49,7 @@ public class ProductServiceImpl implements IProductService {
     public boolean existsRegisterByMaker(Long idMaker) {
         MakerModel makerModel = new MakerModel();
         makerModel.setId(idMaker);
-        if (productDAO.existsRegisterByMaker(idMaker)) {
+        if (productDAO.existsRegisterByMakerModel(makerModel)) {
             return true;
         }
         return false;
