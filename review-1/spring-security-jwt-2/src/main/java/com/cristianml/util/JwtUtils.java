@@ -1,13 +1,18 @@
 package com.cristianml.util;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -45,4 +50,39 @@ public class JwtUtils {
         return jwtToken;
     }
 
+    // Creamos un método que se va a encargar de validar y decodificar el token.
+    public DecodedJWT validateToken(String token) {
+        try {
+            // También necesitamos algoritmo de encriptación del token
+            Algorithm algorithm = Algorithm.HMAC256(this.privateKey);
+
+            // JWTVerifier para verificar el token
+            JWTVerifier verifier = JWT.require(algorithm) // Asignamos el algorithm
+                    .withIssuer(this.userGenerator) // Asignamos el usuario backend en este caso.
+                    .build();
+
+            DecodedJWT decodedJWT = verifier.verify(token);
+            // Si el token es verificado correctamente se devuelve el decodedJWT.
+            return decodedJWT;
+
+        } catch (JWTVerificationException exception) {
+            // Si el token no es válido lanzamos una exception.
+            throw new JWTVerificationException("Token invalid, not authorized.");
+        }
+    }
+
+    // Creamos método que extrae el usuarname
+    public String extractUsername(DecodedJWT decodedJWT) {
+        return decodedJWT.getSubject();
+    }
+
+    // Método para obtener un Claim específico.
+    public Claim getSpecificClaim(DecodedJWT decodedJWT, String claimName) {
+        return decodedJWT.getClaim(claimName);
+    }
+
+    // Método para obtener todos los claims
+    public Map<String, Claim> returnAllClaims(DecodedJWT decodedJWT) {
+        return decodedJWT.getClaims();
+    }
 }
