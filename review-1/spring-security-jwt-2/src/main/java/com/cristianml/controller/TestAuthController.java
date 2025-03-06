@@ -4,7 +4,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/method")
 // Para el uso de las anotaciones de SSecurity debemos tener activado el @EnableMethodSecurity en la classe SecurityConfig.
 // @PreAuthorize("denyAll()") // Con PreAuthorize() indicamos que debe haber una autenticación o no.
 public class TestAuthController {

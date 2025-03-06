@@ -1,13 +1,21 @@
 package com.cristianml.service;
 
+import com.cristianml.dto.AuthLoginRequest;
+import com.cristianml.dto.AuthResponse;
 import com.cristianml.persistence.entity.UserEntity;
 import com.cristianml.persistence.repository.UserRepository;
+import com.cristianml.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +26,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -56,4 +70,39 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 authorityList
         );
     }
+
+    // Creamos nuestro método para la authentication con JWT
+    public AuthResponse loginUser(AuthLoginRequest loginRequest) {
+        String username = loginRequest.username();
+        String password = loginRequest.password();
+
+        Authentication authentication = this.authenticate(username, password);
+        // Capturamos el security context holder para setearle nuestra autenticación,
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        // Generamos el token
+        String accessToken = jwtUtils.createToken(authentication);
+
+        // Retornamos nuestro usuario autenticado como un DTO
+        AuthResponse authResponse = new AuthResponse(username, "User logged successfully.", accessToken, true);
+        return authResponse;
+    }
+
+    private Authentication authenticate(String username, String password) {
+        // Creamos un UserDetails para capturarlo desde la base de datos con todos sus datos y permisos.
+        UserDetails userDetails = this.loadUserByUsername(username);
+
+        // Validamos si sus datos son correctos.
+        if (userDetails == null) {
+            throw new BadCredentialsException("Invalid username or password.");
+        }
+
+        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+            throw new BadCredentialsException("Invalid password.");
+        }
+
+        // Retornamos el usuario autenticado.
+        return new UsernamePasswordAuthenticationToken(username, userDetails.getPassword(), userDetails.getAuthorities());
+    }
+
 }

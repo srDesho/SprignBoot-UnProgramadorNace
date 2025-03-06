@@ -1,6 +1,9 @@
 package com.cristianml.config;
 
+import com.cristianml.config.filter.JwtTokenValidator;
 import com.cristianml.service.UserDetailsServiceImpl;
+import com.cristianml.util.JwtUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,6 +24,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,46 +36,37 @@ import java.util.List;
 @EnableMethodSecurity // Con esta hacemos configuraciones con anotaciones.
 public class SecurityConfig {
 
-     // Lo segundo es configurar el SecurityFilterChain como un Bean
+    @Autowired
+    private JwtUtils jwtUtils;
+
+    // Lo segundo es configurar el SecurityFilterChain como un Bean
     @Bean
-    // El HttpSecurity es el que nos permite pasar todos los filtros y gracias a él podemos personalizar nuestra config.
+// El HttpSecurity es el que nos permite pasar todos los filtros y gracias a él podemos personalizar nuestra config.
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                // Protección contra CSRF (Cross-Site Request Forgery)
-
-                // .csrf en Spring Security habilita la protección contra ataques CSRF.
-                // CSRF es un tipo de ataque en el que un atacante intenta
-                // que un usuario autenticado realice acciones no deseadas en una
-                // aplicación web, aprovechando la sesión activa del usuario.
-
-                // En APIs REST, donde la autenticación suele ser stateless
-                // (mediante tokens), la protección CSRF no es necesaria y puede
-                // incluso interferir con el funcionamiento normal de la API.
-                // Por lo tanto, se desactiva la protección CSRF.
+                // Deshabilita CSRF para APIs REST stateless.
                 .csrf(csrf -> csrf.disable())
-                // Configuramos para que haga una autenticación básica(o sea sin token u otra) y que sea por defecto.
+                // Configura autenticación básica por defecto.
                 .httpBasic(Customizer.withDefaults())
-                // Configuramos el sessionManagement para que trabajemos con sesión sin estado(STATELESS).
+                // Configura sesión stateless.
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // Ahora configuramos los endpoints públicos
+                // Configura endpoints públicos/privados.
                 .authorizeHttpRequests(http -> {
-                    // Primero identificamos el tipo de método de solicitud(GET, POST, ETC...)
-                    // Lo segundo es poner las rutas de los endpoints.
-                    // permitAll() es para permitir el acceso a usuarios sin que estén logeados
-                    http.requestMatchers(HttpMethod.GET, "/auth/get").permitAll();
-                    // Configuramos endpoints privados
-                    // .hasAuthority() es para definir qué usuarios pueden acceder depende de la autorización(permiso) que tienen.
-                    http.requestMatchers(HttpMethod.POST, "/auth/post").hasAnyAuthority("CREATE", "READ");
-                    http.requestMatchers(HttpMethod.PATCH, "/auth/patch").hasAnyRole("DEVELOPER");
-
-                    // Configura seguridad para peticiones no especificadas.
-
-                    // Bloquea todo acceso a endpoints no definidos explícitamente (lista blanca).
+                    // Permite acceso a /auth/get sin login.
+                    http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    // Requiere permisos CREATE/READ para /auth/post.
+                    http.requestMatchers(HttpMethod.POST, "/method/post").hasAnyAuthority("CREATE", "READ");
+                    // Requiere rol DEVELOPER para /auth/patch.
+                    http.requestMatchers(HttpMethod.PATCH, "/method/patch").hasAnyRole("DEVELOPER");
+                    http.requestMatchers(HttpMethod.GET, "/method/get").hasRole("INVITED");
+                    // Bloquea endpoints no definidos.
                     http.anyRequest().denyAll();
-
-                    // Requiere autenticación para endpoints no definidos explícitamente (lista negra).
+                    // Requiere autenticación para endpoints no definidos (alternativa).
                     // http.anyRequest().authenticated();
                 })
+                // Aquí es donde debemos agregar nuestro filtro token que configuramos.
+                // .addFilterBefore para que este se ejecute antes del filtro BasicAuthenticationFilter
+                .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
                 .build();
     }
 

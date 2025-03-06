@@ -22,7 +22,7 @@ public class JwtUtils {
     @Value("${security.jwt.key.private}")
     private String privateKey; // Clave secreta para firma JWT.
 
-    @Value("security.jwt.user.generator")
+    @Value("${security.jwt.user.generator}")
     private String userGenerator; // Emisor del token (backend).
 
     // Genera un token JWT para el usuario autenticado.
@@ -31,7 +31,7 @@ public class JwtUtils {
         String username = authentication.getPrincipal().toString(); // Usuario autenticado.
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority) // Extrae roles/permisos.
-                .collect(Collectors.joining()); // Combina roles en string.
+                .collect(Collectors.joining(",")); // Combina roles en string.
 
         return JWT.create()
                 .withIssuer(this.userGenerator) // Emisor (backend).
