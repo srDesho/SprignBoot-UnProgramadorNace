@@ -1,5 +1,6 @@
 package com.cristianml.controller;
 
+import com.cristianml.dto.AuthCreateUserRequest;
 import com.cristianml.dto.AuthLoginRequest;
 import com.cristianml.dto.AuthResponse;
 import com.cristianml.service.UserDetailsServiceImpl;
@@ -18,6 +19,12 @@ public class AuthenticationController {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    // Método para registrarse
+    @PostMapping("/sign-up")
+    public ResponseEntity<AuthResponse> register(@RequestBody @Valid AuthCreateUserRequest authCreateUser) {
+        return new ResponseEntity<>(this.userDetailsService.createUser(authCreateUser), HttpStatus.CREATED);
+    }
 
     @PostMapping("/log-in")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest userRequest) {

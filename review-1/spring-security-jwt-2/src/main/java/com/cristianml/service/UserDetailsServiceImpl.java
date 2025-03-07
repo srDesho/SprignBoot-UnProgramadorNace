@@ -1,8 +1,11 @@
 package com.cristianml.service;
 
+import com.cristianml.dto.AuthCreateUserRequest;
 import com.cristianml.dto.AuthLoginRequest;
 import com.cristianml.dto.AuthResponse;
+import com.cristianml.persistence.entity.RoleEntity;
 import com.cristianml.persistence.entity.UserEntity;
+import com.cristianml.persistence.repository.RoleRepository;
 import com.cristianml.persistence.repository.UserRepository;
 import com.cristianml.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -32,6 +37,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -105,4 +113,54 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UsernamePasswordAuthenticationToken(username, userDetails.getPassword(), userDetails.getAuthorities());
     }
 
+    public AuthResponse createUser(AuthCreateUserRequest authCreateUserRequest) {
+
+        String username = authCreateUserRequest.username();
+        String password = authCreateUserRequest.password();
+        List<String> roleRequest = authCreateUserRequest.roleRequest().roleListName();
+        // Hacemos que los roles concuerden con los de la base de datos para no tener problemas, y lo hacemos
+        // con esto: stream().collect(Collectors.toSet() convertimos la lista a un set
+        // usando nuestro repositorio RoleRepository
+        Set<RoleEntity> roleEntitySet = this.roleRepository.findRoleEntitiesByRoleEnumIn(roleRequest).stream().collect(Collectors.toSet());
+
+        // Verificamos que la lista no esté vacía
+        if (roleEntitySet.isEmpty()) {
+            throw new IllegalArgumentException("The roles specified does not exist");
+        }
+
+        // Seteamos la credenciales al usuario nuevo.
+        UserEntity userEntity = UserEntity.builder()
+                .username(username)
+                .password(passwordEncoder.encode(password)) // Debemos guardar la contraseña encriptada
+                .isEnabled(true)
+                .isAccountNonExpired(true)
+                .isAccountNonLocked(true)
+                .isCredentialsNonExpired(true)
+                .roles(roleEntitySet)
+                .build();
+
+        // Guardamos en la base de datos y capturamos en una variable.
+        UserEntity userCreated = this.userRepository.save(userEntity);
+
+        // Obtenemos los roles y permisos en un ArrayList para pasarlos a spring security
+        List<SimpleGrantedAuthority> authorityList = new ArrayList<>();
+
+        // Roles
+        userCreated.getRoles()
+                .forEach(role -> authorityList.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name()))));
+
+        // Permisos
+        userCreated.getRoles().stream()
+                .flatMap(role -> role.getPermissionList().stream())
+                .forEach(permission -> authorityList.add(new SimpleGrantedAuthority(permission.getName())));
+
+        // Damos acceso y autenticación
+        Authentication authentication = new UsernamePasswordAuthenticationToken(username, password, authorityList);
+        String accessToken = jwtUtils.createToken(authentication); // Generamos el token
+
+        // Devolvemos la respuesta que es el usuario creado con su accesso.
+        AuthResponse authResponse = new AuthResponse(username, password, accessToken, true);
+
+        return authResponse;
+    }
 }
