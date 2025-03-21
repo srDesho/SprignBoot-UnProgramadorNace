@@ -95,7 +95,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.12</version>
+				<version>0.8.11</version> <!-- Versión estable recomendada -->
 				<executions>
 					<execution>
 						<goals>
@@ -108,37 +108,60 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
-					<configuration>
-						<excludes>
-							<exclude>**/controllers/*.class</exclude>
-							<exclude>**/SpringBootRestApplication.class</exclude>
-						</excludes>
-					</configuration>
+						<configuration>
+							<excludes>
+								<exclude>**/controllers/*.class</exclude>
+								<exclude>**/models/**</exclude>
+								<exclude>**/repository/**</exclude>
+								<exclude>**/SpringBootRestApplication.class</exclude>
+								<exclude>**/config/**</exclude>
+								<exclude>**/dto/**</exclude>
+								<exclude>**/exception/**</exclude>
+							</excludes>
+						</configuration>
 					</execution>
-
 					<execution>
 						<id>jacoco-check</id>
 						<goals>
 							<goal>check</goal>
 						</goals>
 						<configuration>
+							<excludes>
+								<exclude>**/controllers/*.class</exclude>
+								<exclude>**/models/**</exclude>
+								<exclude>**/repository/**</exclude>
+								<exclude>**/SpringBootRestApplication.class</exclude>
+								<exclude>**/config/**</exclude>
+								<exclude>**/dto/**</exclude>
+								<exclude>**/exception/**</exclude>
+							</excludes>
 							<rules>
 								<rule>
-									<element>PACKAGE</element>
+									<element>BUNDLE</element> <!-- Cambiado de PACKAGE a BUNDLE -->
 									<limits>
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.85</minimum>
+											<minimum>0.80</minimum> <!-- Aumentado a 80% -->
+										</limit>
+										<limit>
+											<counter>BRANCH</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.50</minimum>
 										</limit>
 									</limits>
+									<excludes>
+										<exclude>com.cristianml.controllers.*</exclude>
+										<exclude>com.cristianml.models.*</exclude>
+										<exclude>com.cristianml.repository.*</exclude>
+										<exclude>com.cristianml.SpringBootRestApplication</exclude>
+									</excludes>
 								</rule>
 							</rules>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 

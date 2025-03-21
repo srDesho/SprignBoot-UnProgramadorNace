@@ -9,33 +9,29 @@ import java.util.Map;
 
 public class Utilities {
 
+    public Utilities(){};
+
     // Creamos nuestro método para formatear nuestro ResponseEntity, o sea para que esté personalizado
     // de tipo object para que pueda recibir cualquier tipo, le ponemos el nombre que querramos
     // le pasamos el parámetro HttpStatus para indicar el estado Http que va a retornar
     public static ResponseEntity<Object> generateResponse(HttpStatus status, String mensaje) {
-        // Creamos un Map para indicar la estructura del json
-        Map<String, Object> map = new HashMap<String, Object>();
-
-        // Envolvemos con un try catch
+        Map<String, Object> map = new HashMap<>();
         try {
+            if (status == null) {
+                throw new NullPointerException("Status cannot be null");
+            }
 
             map.put("fecha", new Date());
-            map.put("status", status);
+            map.put("status", status.value()); // Usar .value() para consistencia
             map.put("mensaje", mensaje);
-            // Podemos agregar muchos mas valores que necesitemos al map.
-
-            return new ResponseEntity<Object>(map, status);
+            return new ResponseEntity<>(map, status);
 
         } catch (Exception e) {
-            // Si hay error pues hacemos lo siquiente
-            map.clear(); // Limpiamos el map, por si se cargó algo antes del error
+            map.clear();
             map.put("fecha", new Date());
             map.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
             map.put("mensaje", e.getMessage());
-            // Podemos agregar muchos mas valores que necesitemos al map.
-
-            return new ResponseEntity<Object>(map, status);
+            return new ResponseEntity<>(map, HttpStatus.INTERNAL_SERVER_ERROR); // ¡Corregir esto!
         }
     }
-
 }

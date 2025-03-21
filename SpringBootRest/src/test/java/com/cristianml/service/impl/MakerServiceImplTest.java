@@ -93,7 +93,7 @@ public class MakerServiceImplTest {
     }
 
     @Test
-    public void testDelecteById() {
+    public void testDeleteById() {
         // Given
         Long idToDelete = 1L;
 
