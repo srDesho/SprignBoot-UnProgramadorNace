@@ -1,5 +1,6 @@
 package com.cristian.exercise.controller;
 
+import com.cristian.exercise.dto.AuthCreateUserRequest;
 import com.cristian.exercise.dto.AuthLoginRequest;
 import com.cristian.exercise.dto.AuthResponse;
 import com.cristian.exercise.security.service.UserDetailsServiceImpl;
@@ -22,6 +23,11 @@ public class AuthenticationController {
     @PostMapping("/log-in")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthLoginRequest request){
         return new ResponseEntity<>(userDetailsService.loginUser(request), HttpStatus.OK);
+    }
+
+    @PostMapping("/sign-up")
+    public ResponseEntity<AuthResponse> signUp(@RequestBody @Valid AuthCreateUserRequest request) {
+        return new ResponseEntity<>(this.userDetailsService.createUser(request), HttpStatus.CREATED);
     }
 
 }
