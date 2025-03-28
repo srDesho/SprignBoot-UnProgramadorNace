@@ -13,7 +13,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -87,7 +86,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     // Creamos el método authenticate que es el que se va a encargar que las credenciales sean correctas.
-    // Con los parámetros que recibe, debmos buscar al usuario en la db.
+    // Con los parámetros que recibe, debemos buscar al usuario en la db.
     public Authentication authenticate(String username, String password) {
         UserDetails userDetails = this.loadUserByUsername(username);
 
