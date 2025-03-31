@@ -1,6 +1,8 @@
 package com.cristianml.notes.security.config;
 
+import com.cristianml.notes.security.config.filter.JwtTokenValidator;
 import com.cristianml.notes.security.service.UserDetailsServiceImpl;
+import com.cristianml.notes.util.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -17,35 +19,45 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    /*@Bean
+    private JwtUtils jwtUtils;
+
+    public SecurityConfig(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
+                    http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
                     http.requestMatchers(HttpMethod.GET, "/notas").hasAuthority("VER_NOTAS");
                     http.requestMatchers(HttpMethod.POST, "/notas").hasAuthority("CREAR_NOTA");
                     http.requestMatchers(HttpMethod.PUT, "/notas/{id}").hasAuthority("EDITAR_NOTA");
                     http.requestMatchers(HttpMethod.GET, "/admin/usuarios").hasAuthority("ADMIN_GESTIONAR_USUARIOS");
                     http.anyRequest().denyAll();
-                }).build();
-    }*/
+                })
+                .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)
+                .build();
+    }
 
-    @Bean
+    /*@Bean
     public SecurityFilterChain securityFilterChain2 (HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
-    }
+    }*/
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {

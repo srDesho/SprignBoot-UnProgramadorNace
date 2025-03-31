@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/notas")
-@PreAuthorize("denyAll()")
+// @PreAuthorize("denyAll()")
 public class NotasController {
 
     @GetMapping
-    @PreAuthorize("hasAuthority('VER_NOTAS')")
+    // @PreAuthorize("hasAuthority('VER_NOTAS')")
     public String helloNotasGet() {
         return "Hello notas - GET";
     }
@@ -20,13 +20,13 @@ public class NotasController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('EDITAR_NOTA')")
+    // @PreAuthorize("hasAuthority('EDITAR_NOTA')")
     public String helloNotasPut(@PathVariable(name = "id") Long id) {
         return "Hello notas - PUT " + id;
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ELIMINAR_NOTA')")
+    // @PreAuthorize("hasAuthority('ELIMINAR_NOTA')")
     public String helloDeleteNotas(@PathVariable("id") Long id) {
         return "Hello notas - DELETE " + id;
     }

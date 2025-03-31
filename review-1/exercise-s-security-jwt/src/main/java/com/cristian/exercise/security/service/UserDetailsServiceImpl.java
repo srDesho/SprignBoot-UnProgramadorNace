@@ -88,6 +88,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new BadCredentialsException("Invalid Username or Password.");
         }
 
+        // Debemos poner bien el orden en matches.
+        // Primer argumento: La contraseña en texto plano que el usuario ingresa.
+        // Segundo argumento: El hash Bcrypt almacenado, generalmente recuperado de la base de datos.
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid password");
         }
