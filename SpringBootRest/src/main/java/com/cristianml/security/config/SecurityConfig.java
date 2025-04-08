@@ -22,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Bean
+    /*@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(csrf -> csrf.disable())
@@ -33,7 +33,16 @@ public class SecurityConfig {
                     http.requestMatchers(HttpMethod.POST, "/api/v1/maker").hasAuthority("CREATE");
                     http.requestMatchers(HttpMethod.DELETE, "/api/v1/maker/{id}").hasAnyRole("DEVELOPER", "ADMIN");
                     http.anyRequest().denyAll();
-                })git status -s
+                })
+                .build();
+    }*/
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .httpBasic(Customizer.withDefaults())
                 .build();
     }
 

@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.function.EntityResponse;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1")
+@PreAuthorize("denyAll()")
 public class MakerController {
 
     @Autowired
@@ -26,6 +28,7 @@ public class MakerController {
 
     // Método obtener por id
     @GetMapping("/maker/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> findById(@PathVariable("id") Long id ) {
         // Como buena práctica debemos crear un Modelo Maker DTO (data transfer object) porque no se debe retornar una entidad porque
         // están etiquetadas como @Entity en SpringBoot, la debemos crear en un paquete llamado dto, dentro del paquete controllers.
@@ -53,6 +56,7 @@ public class MakerController {
 
     // Método para obtener lista de registros
     @GetMapping("/maker")
+    @PreAuthorize("permitAll()")
     public ResponseEntity<?> getMakers() {
         List<MakerDTO> makerList = makerService.findAll()
                 // convertimos con .stream a un makerDTO
@@ -74,6 +78,7 @@ public class MakerController {
 
     // Método para Guardar Maker
     @PostMapping("/maker")
+    @PreAuthorize("hasAuthority('CREATE')")
     // Siempre que retornamos o recibamos un objeto debe se un DTO
     public ResponseEntity<Object> saveMaker(@RequestBody MakerDTO request) {
        // Verificamos que el nombre no venga vacío
@@ -88,6 +93,7 @@ public class MakerController {
 
     // Método para editar un Maker
     @PutMapping("/maker/{id}")
+    @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<Object> updateMaker(@PathVariable("id") Long id, @RequestBody MakerDTO request) {
         // Creamos un Oprional para buscar el Maker por id
         Optional<MakerModel> optional = this.makerService.findById(id);
@@ -114,6 +120,7 @@ public class MakerController {
     private IProductService productService;
 
     @DeleteMapping("/maker/{id}")
+    @PreAuthorize("hasAnyRole('DEVELOPER', 'ADMIN')")
     public ResponseEntity<Object> deleteMaker (@PathVariable("id") Long id) {
         // Creamos optional para verificar que exista en la db
         Optional<MakerModel> optional = this.makerService.findById(id);
