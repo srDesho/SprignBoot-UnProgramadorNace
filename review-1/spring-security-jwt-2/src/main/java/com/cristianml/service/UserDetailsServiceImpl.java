@@ -128,7 +128,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new IllegalArgumentException("The roles specified does not exist");
         }
 
-        // Seteamos la credenciales al usuario nuevo.
+        // Seteamos las credenciales al usuario nuevo.
         UserEntity userEntity = UserEntity.builder()
                 .username(username)
                 .password(passwordEncoder.encode(password)) // Debemos guardar la contraseña encriptada
@@ -158,8 +158,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(username, password, authorityList);
         String accessToken = jwtUtils.createToken(authentication); // Generamos el token
 
-        // Devolvemos la respuesta que es el usuario creado con su accesso.
-        AuthResponse authResponse = new AuthResponse(username, password, accessToken, true);
+        // Devolvemos la respuesta que es el usuario creado con su acceso.
+        AuthResponse authResponse = new AuthResponse(username, "User create successfully.", accessToken, true);
 
         return authResponse;
     }

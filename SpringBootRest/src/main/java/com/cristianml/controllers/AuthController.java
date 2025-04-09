@@ -1,5 +1,6 @@
 package com.cristianml.controllers;
 
+import com.cristianml.dto.request.AuthCreateUserRequest;
 import com.cristianml.dto.request.AuthLoginRequest;
 import com.cristianml.dto.response.AuthResponse;
 import com.cristianml.security.service.UserDetailsServiceImpl;
@@ -20,6 +21,12 @@ public class AuthController {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+
+    @PostMapping("/sign-up")
+    @PreAuthorize("permitAll")
+    public ResponseEntity<AuthResponse> signUp(@RequestBody @Valid AuthCreateUserRequest authCreateUserRequest) {
+        return new ResponseEntity<>(this.userDetailsService.createUser(authCreateUserRequest), HttpStatus.CREATED);
+    }
 
     @PostMapping("/log-in")
     @PreAuthorize("permitAll()")
